@@ -1,3 +1,3 @@
 $(function entryPoint() {
-  console.log.("I'm in!");
+  console.log("I'm in!");
 });
