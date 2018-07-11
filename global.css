@@ -1,0 +1,30 @@
+body {
+  font-family: "SF UI Text", "Helvetica Neue", "Helvetica", sans-serif;
+}
+
+main {
+  padding: 5vw;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+}
+
+section {
+  margin: 5vw 0;
+}
+
+#button-submitLocationQuery {
+  padding: 0.25em;
+}
+
+#section-map {
+  height: 75%;
+  width: 100%;
+}
+#wrapper-map {
+  height: 100%;
+  width: 100%;
+}
+

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>API Capstone</title><!--TODO <title>-->
+	<title>Thinkful API Capstone</title><!--TODO <title>-->
 	<!--OPTN <meta> application-name <meta name="application-name" content="">-->
 	<meta name="description" content=""><!--TODO <meta> description-->
 	<meta name="author" content="Marshall Spainhour">
@@ -12,18 +12,33 @@
 
 	<!--STYLESHEETS-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+	<link rel="stylesheet" href="resets.css">
 	<link rel="stylesheet" href="global.css">
 </head>
 
 
-
 	<body><main role="main">
-    <!--Primary content goes here...-->
-	</main></body>
 
+		<section id="section-search">
+			<form action="#" id="form-locationSearch">
+				<label for="textField-locationQuery">Search for Location:</label>
+				<input type="text" id="textField-locationQuery" required autofocus>
+				<button type="submit" id="button-submitLocationQuery">Search</button>
+			</form>
+		</section>
 
-	<!--JAVASCRIPT-->
-	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="functionality.js"></script>
+		<section id="section-map">
+			<div id="wrapper-map">
+				<!--Map will go here once initialized...-->
+			</div>
+		</section>
 
-</html>
+	</main>
+
+	<!--#region Scripts-->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvZhOq7cVJIJh9rchv-Owdfkn97f75qGQ&libraries=places"></script>
+	<script src="functionality.js"></script>
+	<!--#endregion-->
+
+</body></html>
