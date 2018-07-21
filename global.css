@@ -1,30 +1,172 @@
+html {
+  --font-main: "Rubik";
+  --font-backups: "SF UI Text", "Helvetica Neue", "Helvetica", sans-serif;
+  --color-main: #2233e6;
+  --color-dark: #0b114d;
+  --color-interactible-background: #f5f6ff;
+  --color-background: #fcfdff;
+  --shadow-color: 0 1px 2px hsla(235, 80%, 52%, 0.2), 0 1px 3px hsla(235, 80%, 52%, 0.1);
+  --shadow-monochromatic: 0 1px 2px hsla(235, 75%, 17%, 0.2), 0 1px 3px hsla(235, 75%, 17%, 0.1);
+  --spacing-unit: 5vw;
+}
 body {
-  font-family: "SF UI Text", "Helvetica Neue", "Helvetica", sans-serif;
+  font-family: var(--font-main), var(--font-backups);
+  font-size: 16px;
 }
-
 main {
-  padding: 5vw;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-around;
-  align-items: center;
-  align-content: center;
+  padding: var(--spacing-unit);
+  background-color: var(--color-background);
 }
 
-section {
-  margin: 5vw 0;
-}
 
-#button-submitLocationQuery {
-  padding: 0.25em;
-}
 
-#section-map {
-  height: 75%;
-  width: 100%;
-}
-#wrapper-map {
-  height: 100%;
-  width: 100%;
-}
+/* #region TYPOGRAPHY */
+  .app-title {
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 24px;
+    color: var(--color-main);
+    text-shadow: var(--shadow-color);
+  }
+  .overline-text {} /*TODO*/
+  .standard-text {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    line-height: 24px;
+    color: var(--color-dark);
+  }
+  .compact-standard-text {} /*TODO .standard-text with smaller line-height to accomodate attraction result layouts*/
+  .attributive-text {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    line-height: 16px;
+    color: var(--color-dark);
+    opacity: 0.5;
+  }
+  .link {
+    color: var(--color-main);
+    text-decoration: none;
+  }
+  .centered-text {
+    text-align: center;
+  }
+  .left-justified-text {
+    text-align: left;
+  }
+/* #endregion TYPOGRAPHY*/
 
+/* #region ELEMENTS */
+  .view {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
+    height: 100%;
+    width: 100%;
+  }
+  .text-button,
+  .icon-button {
+    height: 48px;
+    letter-spacing: 0.5px;
+    line-height: 16px;
+    color: var(--color-main);
+    border: 1px solid var(--color-main);
+    background-color: var(--color-interactible-background);
+    box-shadow: var(--shadow-color);
+    border-radius: 3px;
+  }
+  .text-button {
+    margin: 0 auto;
+    padding: 16px 24px;
+    width: 100%;
+  }
+  .icon-button {
+    height: 48px;
+    width: 48px;
+    min-width: 48px;
+    padding: 8px;
+  }
+  .icon {
+    position: relative;
+  }
+  .search-field {
+    height: 48px;
+    width: 100%;
+    padding: 16px;
+    padding-right: 64px; /*#button-submit-location-query's width + the internal padding*/
+
+    color: var(--color-dark);
+    border: 1px solid var(--color-dark);
+    background-color: hsla(0, 0%, 0%, 0);
+    box-shadow: var(--shadow-monochromatic);
+    border-radius: 3px;
+  }
+  .attraction-result {} /*TODO*/
+/* #endregion ELEMENTS */
+
+/* #region ID-TARGETED */
+  #welcome-header {
+    margin-top: 1em;
+    margin-bottom: 20vh;
+  }
+  #welcome-body > .standard-text {
+    max-width: 400px;
+    margin-bottom: 2em;
+  }
+  #welcome-footer {
+    margin-top: auto;
+  }
+
+  #form-location-search {
+    width: 100%;
+  }
+  #form-location-search {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    width: 100%;
+    border: 0;
+    padding: 0;
+  }
+  #field-location-query {
+    margin-left: calc( var(--spacing-unit) / 2);
+  }
+  #button-submit-location-query {
+    position: absolute;
+    top: var(--spacing-unit);
+    right: var(--spacing-unit);
+    z-index: 1;
+    box-shadow: none;
+  }
+  #svg-geolocate-user {
+    top: 2px; /* Adjusting icon centering within button */
+  }
+  #svg-search {
+    top: 2px; /* Adjusting icon centering within button */
+  }
+  #label-location-query { /* Center-screen search prompt */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 38%;
+    width: calc(100vw - calc( var(--spacing-unit)*2 ));
+    max-width: 423px;
+  }
+/* #endregion VIEW-SPECIFIC*/
+
+
+
+
+.hidden {
+  position: absolute;
+  left: -100000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

@@ -1,71 +1,184 @@
-const textField_locationQuery = document.getElementById("textField-locationQuery");
-const button_submitLocationQuery = document.getElementById("button-submitLocationQuery");
-const wrapper_map = document.getElementById("wrapper-map");
 
-const geocoder = new google.maps.Geocoder();
-let map;
-const mapMarkers = [];
+const flags = {
+  userDeviceHasNativeGeolocation: ("geolocation" in window.navigator)
+}
 
 const userLocation = {
-  name: null,
   latitude: null,
-  longitude: null
+  longitude: null,
+  googlePlaceID: null,
+  setCoordinates: function(newLatitude, newLongitude) {
+    this.latitude = newLatitude;
+    this.longitude = newLongitude;
+    return {
+      latitude: this.latitude,
+      longitude: this.longitude
+    };
+  }
+};
+
+class Attraction { //TODO
+  constructor() {
+    this.name = null;
+  }
+}
+
+const ui = {
+  initialize: function() {
+    this.moveToView(this.components.$view_welcome);
+  },
+  $activeView: null,
+  moveToView: function($newView) {
+    this.$activeView.fadeOut(350, () => {
+      this.$activeView = $newView;
+      this.$activeView.fadeIn(350);
+    });
+  },
+  setSearchText: function(newText) {
+    this.components.$field_locationQuery.val(newText);
+  },
+  renderAttractions: function() {
+    //TODO
+  },
+  components: {
+    $view_welcome: $("#view-welcome"),
+      $button_letsGetStarted: $("#button-lets-get-started"),
+    $view_search: $("#view-search"),
+      $button_geolocateUser: $("#button-geolocate-user"),
+      $field_locationQuery: $("#field-location-query"),
+      $button_submitLocationQuery:  $("#button-submit-location-query"),
+    $view_attractionDetail: $("#view-attraction-detail"), //TODO
+      // $wrapper_map: null, //TODO
+      // $wrapper_attractionDetailText: null, //TODOt
+      // $button_moreInfoOnFoursquare: null //TODO
+  }
+};
+
+googleGeocoding = {
+  geocoder: new google.maps.Geocoder(),
+  convert: function(queryToConvert) {
+    this.conversionFetch(queryToConvert)
+    .then(this.conversionFetchSucceeded)
+    .catch(this.conversionFetchFailed);
+  },
+  conversionFetch: function(queryToConvert) {
+    return new Promise((resolve, reject) => {
+      this.geocoder.geocode({"address": queryToConvert}, function(results, status) {
+        status === "OK" ? resolve(results) : reject(status);
+      });
+    });
+  },
+  conversionFetchFailed: function(status) {
+    console.error(`Google Geocoding API status: ${status}.`);
+  },
+  conversionFetchSucceeded: function(results) {
+    console.log("Google Geocoding API status: OK.");
+    googleGeocoding.networkResponseCache = results[0];
+    userLocation.setCoordinates(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+    userLocation.googlePlaceID = results[0].place_id;
+    userLocation.googleFormattedAddress = results[0].formatted_address;
+    foursquare.recommend();
+    ui.setSearchText(userLocation.googleFormattedAddress);
+    console.log(userLocation);
+  },
+  networkResponseCache: null
+};
+
+const foursquare = {
+  recommend: function() {
+    console.log(userLocation.latitude, userLocation.longitude);
+    $.ajax({
+      dataType: "json",
+      url: "https://api.foursquare.com/v2/venues/explore",
+      data: {
+        ll: `${userLocation.latitude},${userLocation.longitude}`,
+        radius: 10000, //meters
+        limit: 50, //results
+        openNow: true,
+        client_id: "JVNYUDCL0XHG00XHJPAIXW5G3GWPMCMWERUU2THM2KXHLSOG",
+        client_secret: "4ZC4TTXFAZM5QVC1SS2MQLYTR50R0A2OAOVPLN1UR5GIHSQB",
+        v: "20180718"
+      }
+    })
+    .done(this.recommendationFetchSucceeded)
+    .fail(this.recommendationFetchFailed);
+  },
+  recommendationFetchFailed: function(jqXHR, textStatus, errorThrown) {
+    console.log("Failure!");
+    console.log("jqXHR:", jqXHR);
+    console.log("textStatus:", textStatus);
+    console.log("errorThrown:", errorThrown);
+  },
+  recommendationFetchSucceeded: function(data, textStatus, jqXHR) {
+    console.log("Foursquare API status: OK.");
+    if ("warning" in data.response) {
+      console.warn(`Foursquare API: "${data.response.warning.text}"`);
+    }
+    foursquare.networkResponseCache = data;
+    foursquare.fetchedAttractions = data.response.groups[0].items.map(function(item) {
+      return item.venue;
+    });
+    console.log(foursquare.fetchedAttractions);
+  },
+  fetchedAttractions: [],
+  networkResponseCache: null
+}
+
+googleMaps = { //TODO
+  $wrapper: ui.components.$wrapper_map,
+  options: {
+    //TODO
+  },
+  setCenter: function(newLatitude, newLongitude) {
+    //TODO
+  },
+  setZoom: function(newZoom) {
+    //TODO
+  },
+  setMarker: function(latitude, longitude) {
+    //TODO
+  },
+  activeMarker: null,
+  removeMarker: function() {
+    //TODO
+  },
 };
 
 
 
-document.addEventListener("DOMContentLoaded", function entryPoint() {
-  initializeApp();
+//Entry Point Function
+$(function entryPoint() {
+  startup();
+  configureEventListeners();
 });
 
-
-
-function initializeApp() {
-  //Event Listeners
-  button_submitLocationQuery.addEventListener("click", function() {
-    if (textField_locationQuery.value != null) {
-      setCoordinatesFromQuery(textField_locationQuery.value);
-    }
-  });
-
-  //Map
-  map = new google.maps.Map(wrapper_map, {
-    center: { lat: 50, lng: 50 },
-    zoom: 5
-  });
+function startup() {
+  if (!flags.userDeviceHasNativeGeolocation) {
+    console.warn("User can not geolocate natively.");
+  }
+  ui.$activeView = ui.components.$view_welcome;
 }
 
-function setCoordinatesFromQuery(query) {
-  geocoder.geocode({"address": query}, function(results, status) {
-    if (status == "OK") {
-      userCoordinates.latitude = results[0].geometry.location.lat(); 
-      userCoordinates.longitude = results[0].geometry.location.lng();
+function configureEventListeners() {
 
-      //TEMP: Formatted Result Output
-      const formattedResults = {
-        "[1] Formatted Address": results[0].formatted_address,
-        "[2] Location Type(s)": results[0].types.join(", "),
-        "[3] Latitude": results[0].geometry.location.lat(),
-        "[4] Longitude": results[0].geometry.location.lng()
-      }
-      console.table(formattedResults);
-    }
-    else {
-      console.log(`Unexpected Geocoder status: ${status}`);
-      switch(results) {
-        case "ZERO_RESULTS":
-          break;
-        case "OVER_QUERY_LIMIT":
-          break;
-        case "REQUEST_DENIED":
-          break;
-        case "INVALID_REQUEST":
-          break;
-        case "UNKNOWN_ERROR":
-          break;
-        case "ERROR":
-          break;
-      }
+  ui.components.$button_letsGetStarted.on("click", function() {
+    ui.moveToView(ui.components.$view_search);
+    ui.components.$field_locationQuery.focus();
+  });
+
+  if (flags.userDeviceHasNativeGeolocation) {
+    ui.components.$button_geolocateUser.on("click", () => {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        userLocation.setCoordinates(position.coords.latitude, position.coords.longitude);
+        googleGeocoding.convert(userLocation.latitude.toString() + "," + userLocation.longitude.toString())
+      });
+    });
+  }
+
+  ui.components.$button_submitLocationQuery.on("click", () => {
+    if (ui.components.$field_locationQuery.val() != "") {
+      googleGeocoding.convert( ui.components.$field_locationQuery.val() );
     }
   });
+
 }

@@ -1,44 +1,79 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Thinkful API Capstone</title><!--TODO <title>-->
-	<!--OPTN <meta> application-name <meta name="application-name" content="">-->
-	<meta name="description" content=""><!--TODO <meta> description-->
+	<title>What's Good?</title>
+	<meta name="application-name" content="What's Good?">
+	<meta name="description" content="At-a-glance activity options.">
 	<meta name="author" content="Marshall Spainhour">
-	<!--OPTN <base> <base href="BEFORE_ALL_OTHER_RELATIVE_URLS">-->
-
 	<!--STYLESHEETS-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:400,500,700">
 	<link rel="stylesheet" href="resets.css">
 	<link rel="stylesheet" href="global.css">
 </head>
-
-
 	<body><main role="main">
 
-		<section id="section-search">
-			<form action="#" id="form-locationSearch">
-				<label for="textField-locationQuery">Search for Location:</label>
-				<input type="text" id="textField-locationQuery" required autofocus>
-				<button type="submit" id="button-submitLocationQuery">Search</button>
-			</form>
+
+
+
+
+		<section id="view-welcome" class="view">
+
+			<header id="welcome-header">
+				<h1 class="app-title centered-text">What's Good?</h1>
+			</header>
+
+			<div id="welcome-body" class="wrapper">
+				<p class="standard-text centered-text">Not sure what’s popular around you? Headed somewhere new and aren’t sure what you’ll do when you get there? That's what I'm here for.</p>
+				<button type="button" id="button-lets-get-started" class="text-button" autofocus>Let's Get Started</button>
+			</div>
+
+			<footer id="welcome-footer">
+				<p class="attributive-text centered-text">Powered by <a href="https://foursquare.com/about" class="link">Foursquare</a> & <a href="https://www.google.com/intl/en/about/our-company/" class="link">Google</a></p>
+			</footer>
+
 		</section>
 
-		<section id="section-map">
-			<div id="wrapper-map">
-				<!--Map will go here once initialized...-->
-			</div>
+
+
+		<section id="view-search" class="view" style="display:none">
+
+				<form action="#" id="form-location-search">
+				<!-- <fieldset id="fieldset-location-search" name="location-search"> -->
+					<legend class="hidden">Location Entry</legend>
+
+					<button type="button" id="button-geolocate-user" aria-label="Use my location." class="icon-button">
+						<img id="svg-geolocate-user" class="icon" src="icons/geolocateUser.svg" alt="Use My Location">
+					</button>
+					
+					<input type="text" id="field-location-query" aria-label="Enter and submit a location to find nearby activities." class="search-field standard-text" placeholder="Location" required autofocus>
+					<label id="label-location-query" for="field-location-query" form="form-location-search" class="standard-text centered-text">Throw a city in the search bar, or use your current location, and let’s figure out what you could be doing.<br><br>(Entering construction zone. Converts roughly typed addresses and geocoordinates to complete addresses, and silently fetches Foursquare venue info and prints it to the console.)</label> 
+					
+					<button type="submit" for="form-location-search" id="button-submit-location-query" aria-label="Submit entered location." class="icon-button">
+						<img id="svg-search" class="icon" src="icons/search.svg" alt="Submit Search">
+					</button>
+
+				<!-- </fieldset> -->
+				</form>
+
 		</section>
+
+
+
+		<!-- TODO <section id="view-attraction-detail" class="view" style="display:none">
+			Content
+		</section> -->
+
+
+
+
 
 	</main>
-
-	<!--#region Scripts-->
+	<!-- #region / Scripts -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvZhOq7cVJIJh9rchv-Owdfkn97f75qGQ&libraries=places"></script>
 	<script src="functionality.js"></script>
-	<!--#endregion-->
-
+	<!--#endregion -->
 </body></html>
