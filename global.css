@@ -1,167 +1,238 @@
 html {
-  --font-main: "Rubik";
-  --font-backups: "SF UI Text", "Helvetica Neue", "Helvetica", sans-serif;
-  --color-main: #2233e6;
-  --color-dark: #0b114d;
-  --color-interactible-background: #f5f6ff;
-  --color-background: #fcfdff;
-  --shadow-color: 0 1px 2px hsla(235, 80%, 52%, 0.2), 0 1px 3px hsla(235, 80%, 52%, 0.1);
-  --shadow-monochromatic: 0 1px 2px hsla(235, 75%, 17%, 0.2), 0 1px 3px hsla(235, 75%, 17%, 0.1);
-  --spacing-unit: 5vw;
+  --fonts: "Rubik", "SF UI Text", "Helvetica Neue", "Helvetica", sans-serif;
+  --color-main: #2233E6;
+  --color-dark: #0B114D;
+  --color-light: white;
+  --color-interactible-background: var(--color-main);
+  --color-background: white;
+  --shadow-main: 0 1px 2px hsla(235, 80%, 52%, 0.30), 0 1px 3px hsla(235, 80%, 52%, 0.15);
+  --shadow-dark: 0 1px 2px hsla(235, 75%, 17%, 0.20), 0 1px 3px hsla(235, 75%, 17%, 0.10);
+  --spacing-unit: calc(8px + 5vmin);
 }
 body {
-  font-family: var(--font-main), var(--font-backups);
+  background-color: var(--color-background);
+  font-family: var(--fonts);
   font-size: 16px;
+  letter-spacing: 0.5px;
+  line-height: 24px;
+  color: var(--color-dark);
+  text-align: center;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 }
 main {
   padding: var(--spacing-unit);
-  background-color: var(--color-background);
 }
+.view {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  min-height: 100%;
+  width: 100%;
+}
+.card {
+  padding: 16px;
+  border-radius: 3px;
+  box-shadow: var(--shadow-dark);
+}
+
+
 
 
 
 /* #region TYPOGRAPHY */
-  .app-title {
-    font-size: 24px;
-    font-weight: 500;
+  .typography-app-title {
+    font-size: 28px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     line-height: 24px;
     color: var(--color-main);
-    text-shadow: var(--shadow-color);
+    text-shadow: var(--shadow-main);
   }
-  .overline-text {} /*TODO*/
-  .standard-text {
-    font-size: 16px;
-    letter-spacing: 0.5px;
-    line-height: 24px;
+  .typography-overline {
+    opacity: 0.6;
+    font-size: 10px;
     color: var(--color-dark);
+    letter-spacing: 1.5px;
+    line-height: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    white-space: no-wrap;
   }
-  .compact-standard-text {} /*TODO .standard-text with smaller line-height to accomodate attraction result layouts*/
-  .attributive-text {
+  .typography-compact {
+    line-height: 20px;
+  }
+  .typography-credit {
     font-size: 12px;
     letter-spacing: 0.5px;
     line-height: 16px;
     color: var(--color-dark);
     opacity: 0.5;
   }
-  .link {
-    color: var(--color-main);
-    text-decoration: none;
-  }
-  .centered-text {
-    text-align: center;
-  }
-  .left-justified-text {
+  .left-align {
     text-align: left;
   }
-/* #endregion TYPOGRAPHY*/
-
-/* #region ELEMENTS */
-  .view {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    align-content: flex-start;
-    height: 100%;
-    width: 100%;
-  }
-  .text-button,
-  .icon-button {
-    height: 48px;
-    letter-spacing: 0.5px;
-    line-height: 16px;
+  .colored {
     color: var(--color-main);
-    border: 1px solid var(--color-main);
-    background-color: var(--color-interactible-background);
-    box-shadow: var(--shadow-color);
-    border-radius: 3px;
   }
+  .dark {
+    color: var(--color-dark);
+  }
+  .light {
+    color: var(--color-light);
+  }
+/*#endregion TYPOGRAPHY*/
+
+
+
+
+/* #region BUTTONS */
+button {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+
+  line-height: 16px;
+  color: var(--color-light);
+  border: 0;
+  background-color: var(--color-main);
+  box-shadow: var(--shadow-main);
+  border-radius: 3px;
+  height: 48px; /*Accounts for the search bar and the top 2px of a .card's box-shadow*/
+}
   .text-button {
-    margin: 0 auto;
     padding: 16px 24px;
     width: 100%;
   }
   .icon-button {
-    height: 48px;
     width: 48px;
     min-width: 48px;
-    padding: 8px;
-  }
-  .icon {
-    position: relative;
-  }
-  .search-field {
     height: 48px;
-    width: 100%;
-    padding: 16px;
-    padding-right: 64px; /*#button-submit-location-query's width + the internal padding*/
+    min-height: 48px;
+  }
+/*#endregion BUTTONS*/
 
-    color: var(--color-dark);
-    border: 1px solid var(--color-dark);
-    background-color: hsla(0, 0%, 0%, 0);
-    box-shadow: var(--shadow-monochromatic);
-    border-radius: 3px;
-  }
-  .attraction-result {} /*TODO*/
-/* #endregion ELEMENTS */
 
-/* #region ID-TARGETED */
-  #welcome-header {
-    margin-top: 1em;
-    margin-bottom: 20vh;
-  }
-  #welcome-body > .standard-text {
-    max-width: 400px;
-    margin-bottom: 2em;
-  }
-  #welcome-footer {
-    margin-top: auto;
-  }
 
-  #form-location-search {
-    width: 100%;
-  }
-  #form-location-search {
+
+
+/*#region SEARCH FORM*/
+#header-search-form {
+  background-color: white;
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  padding: var(--spacing-unit);
+}
+  #form-search {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
-    align-content: flex-start;
+    align-content: center;
     align-items: center;
     width: 100%;
     border: 0;
     padding: 0;
-  }
-  #field-location-query {
-    margin-left: calc( var(--spacing-unit) / 2);
-  }
-  #button-submit-location-query {
-    position: absolute;
-    top: var(--spacing-unit);
-    right: var(--spacing-unit);
     z-index: 1;
-    box-shadow: none;
   }
-  #svg-geolocate-user {
-    top: 2px; /* Adjusting icon centering within button */
+    #button-geolocate-user {
+      margin-right: calc( var(--spacing-unit)/2 );
+    }
+    input[type="text"] {
+      height: 48px;
+      width: 100%;
+      padding: 16px;
+      padding-right: 48px; /*#button-submit-location-query's width + the internal padding*/
+
+      color: var(--color-dark);
+      border: none;
+      background-color: hsla(0, 0%, 0%, 0);
+      box-shadow: var(--shadow-dark);
+      border-radius: 3px;
+    }
+    #label-field-search { /* Center-screen search prompt */
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -38%;
+      width: calc(100vw - calc( var(--spacing-unit)*2 ));
+      max-width: 423px;
+    }
+    #button-submit-search {
+      position: absolute;
+      right: 0;
+      z-index: 1;
+      background-color: hsla(0, 0%, 100%, 0%);
+      box-shadow: none;
+    }
+  #search-results-wrapper {
+    position: relative;
+    top: calc(var(--spacing-unit) + 48px + 2px); /* Accounts for edge margins, search bar height, and top 2 pixels of box-shadow on the first .card .search-result. */
+    margin-bottom: var(--spacing-unit);
+    width: 100%;
+    max-width: 500px;
   }
-  #svg-search {
-    top: 2px; /* Adjusting icon centering within button */
-  }
-  #label-location-query { /* Center-screen search prompt */
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 38%;
-    width: calc(100vw - calc( var(--spacing-unit)*2 ));
-    max-width: 423px;
-  }
-/* #endregion VIEW-SPECIFIC*/
+    .search-result {
+      position: relative;
+      width: 100%;
+      padding: 16px;
+      padding-right: 41px;
+      background-color: var(--color-main);
+      box-shadow: var(--shadow-main);
+      margin-bottom: calc( var(--spacing-unit)/2 );
+    }
+    .search-result:last-of-type {
+      margin-bottom: 0;
+    }
+      .svg-search-result-chevron {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 16px;
+      }
+/*#endregion SEARCH FORM*/
 
 
 
 
+
+/*#region VIEW-SPECIFIC*/
+  #view-welcome {
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 500px;
+  }
+    #app-title {
+      margin-bottom: 20vh;
+    }
+    #card-welcome {
+      margin-bottom: 16px;
+    }
+    #welcome-credit {
+      position: absolute;
+      bottom: var(--spacing-unit);
+    }
+/*#endregion*/
+
+
+
+
+
+/*#region UTILITY CLASSES*/
 .hidden {
   position: absolute;
   left: -100000px;
@@ -170,3 +241,4 @@ main {
   height: 1px;
   overflow: hidden;
 }
+/*#endregion UTILITY CLASSES*/

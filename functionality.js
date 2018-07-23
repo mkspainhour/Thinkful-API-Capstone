@@ -1,4 +1,3 @@
-
 const flags = {
   userDeviceHasNativeGeolocation: ("geolocation" in window.navigator)
 }
@@ -10,48 +9,62 @@ const userLocation = {
   setCoordinates: function(newLatitude, newLongitude) {
     this.latitude = newLatitude;
     this.longitude = newLongitude;
-    return {
-      latitude: this.latitude,
-      longitude: this.longitude
-    };
   }
 };
 
-class Attraction { //TODO
+
+
+class Venue { //TODO
   constructor() {
-    this.name = null;
+    //Free
+    this.id = null;
+    this.title = null;
+    this.type = null;
+    //Premium (500/day)
+    this.priceTier = null;
+    this.closingTime = null;
+    this.website = null;
+    this.phoneNumber = null;
+    this.rating = null;
+    this.votes = null;
   }
 }
 
 const ui = {
-  initialize: function() {
-    this.moveToView(this.components.$view_welcome);
-  },
   $activeView: null,
+
   moveToView: function($newView) {
     this.$activeView.fadeOut(350, () => {
       this.$activeView = $newView;
       this.$activeView.fadeIn(350);
     });
   },
+
   setSearchText: function(newText) {
-    this.components.$field_locationQuery.val(newText);
+    this.$field_locationSearch.val(newText);
   },
-  renderAttractions: function() {
-    //TODO
+
+  renderVenues: function() {
+    let venueElementCollection = [];
+    for(let i = 0; i <  foursquare.fetchedVenues.length; i++) {
+      let venueElement = 
+      `<div class="search-result card">
+        <p class="typography-overline left-align light">${foursquare.fetchedVenues[i].type}</p>
+        <p class="typography-compact left-align light">${foursquare.fetchedVenues[i].title}</p>
+        <img src="icons/chevron.svg" class="svg-search-result-chevron" alt="More venue detail...">
+      </div>`;
+      venueElementCollection.push(venueElement);
+    }
+    this.$wrapper_searchResults.html(venueElementCollection);
   },
-  components: {
-    $view_welcome: $("#view-welcome"),
-      $button_letsGetStarted: $("#button-lets-get-started"),
-    $view_search: $("#view-search"),
-      $button_geolocateUser: $("#button-geolocate-user"),
-      $field_locationQuery: $("#field-location-query"),
-      $button_submitLocationQuery:  $("#button-submit-location-query"),
-    $view_attractionDetail: $("#view-attraction-detail"), //TODO
-      // $wrapper_map: null, //TODO
-      // $wrapper_attractionDetailText: null, //TODOt
-      // $button_moreInfoOnFoursquare: null //TODO
-  }
+
+  $view_welcome: $("#view-welcome"),
+    $button_letsGetStarted: $("#button-lets-get-started"),
+  $view_search: $("#view-search"),
+    $button_geolocateUser: $("#button-geolocate-user"),
+    $field_locationSearch: $("#field-search"),
+    $button_submitLocationQuery: $("#button-submit-search"),
+    $wrapper_searchResults: $("#search-results-wrapper")
 };
 
 googleGeocoding = {
@@ -73,20 +86,16 @@ googleGeocoding = {
   },
   conversionFetchSucceeded: function(results) {
     console.log("Google Geocoding API status: OK.");
-    googleGeocoding.networkResponseCache = results[0];
     userLocation.setCoordinates(results[0].geometry.location.lat(), results[0].geometry.location.lng());
     userLocation.googlePlaceID = results[0].place_id;
     userLocation.googleFormattedAddress = results[0].formatted_address;
     foursquare.recommend();
     ui.setSearchText(userLocation.googleFormattedAddress);
-    console.log(userLocation);
   },
-  networkResponseCache: null
 };
 
 const foursquare = {
   recommend: function() {
-    console.log(userLocation.latitude, userLocation.longitude);
     $.ajax({
       dataType: "json",
       url: "https://api.foursquare.com/v2/venues/explore",
@@ -104,7 +113,7 @@ const foursquare = {
     .fail(this.recommendationFetchFailed);
   },
   recommendationFetchFailed: function(jqXHR, textStatus, errorThrown) {
-    console.log("Failure!");
+    console.error("reccomend() failed.");
     console.log("jqXHR:", jqXHR);
     console.log("textStatus:", textStatus);
     console.log("errorThrown:", errorThrown);
@@ -114,18 +123,43 @@ const foursquare = {
     if ("warning" in data.response) {
       console.warn(`Foursquare API: "${data.response.warning.text}"`);
     }
-    foursquare.networkResponseCache = data;
-    foursquare.fetchedAttractions = data.response.groups[0].items.map(function(item) {
-      return item.venue;
+    foursquare.fetchedVenues = data.response.groups[0].items.map(function(item) {
+      let newVenue = new Venue();
+      newVenue.id = item.venue.id;
+      newVenue.title = item.venue.name;
+      newVenue.type = item.venue.categories[0].name;
+      return newVenue;
     });
-    console.log(foursquare.fetchedAttractions);
+    ui.renderVenues();
   },
-  fetchedAttractions: [],
-  networkResponseCache: null
+  fetchedVenues: [],
+
+  getVenueDetails: function(venueID) {
+    $.ajax({
+      dataType: "json",
+      url: `https://api.foursquare.com/v2/venues/${venueID}`,
+      data: {
+        client_id: "JVNYUDCL0XHG00XHJPAIXW5G3GWPMCMWERUU2THM2KXHLSOG",
+        client_secret: "4ZC4TTXFAZM5QVC1SS2MQLYTR50R0A2OAOVPLN1UR5GIHSQB",
+        v: "20180718"
+      }
+    })
+    .done(this.venueDetailsFetchSucceeded)
+    .fail(this.venueDetailsFetchFailed);
+  },
+  venueDetailsFetchFailed: function(jqXHR, textStatus, errorThrown) {
+    console.error("getVenueDetails() failed.");
+    console.log("jqXHR:", jqXHR);
+    console.log("textStatus:", textStatus);
+    console.log("errorThrown:", errorThrown);
+  },
+  venueDetailsFetchSucceeded: function(data, textStatus, jqXHR) {
+    console.log(data);
+  }
 }
 
 googleMaps = { //TODO
-  $wrapper: ui.components.$wrapper_map,
+  $wrapper: ui.$wrapper_map,
   options: {
     //TODO
   },
@@ -156,29 +190,42 @@ function startup() {
   if (!flags.userDeviceHasNativeGeolocation) {
     console.warn("User can not geolocate natively.");
   }
-  ui.$activeView = ui.components.$view_welcome;
+  ui.$activeView = ui.$view_welcome;
+  if(!flags.userDeviceHasNativeGeolocation) {
+    ui.$button_geolocateUser.hide();
+  }
 }
 
 function configureEventListeners() {
 
-  ui.components.$button_letsGetStarted.on("click", function() {
-    ui.moveToView(ui.components.$view_search);
-    ui.components.$field_locationQuery.focus();
+  ui.$button_letsGetStarted.on("click", function() {
+    ui.moveToView(ui.$view_search);
+    ui.$field_locationSearch.focus();
   });
 
-  if (flags.userDeviceHasNativeGeolocation) {
-    ui.components.$button_geolocateUser.on("click", () => {
-      navigator.geolocation.getCurrentPosition(function(position) {
+  ui.$button_geolocateUser.on("click", () => {
+    ui.setSearchText("Locating...");
+    navigator.geolocation.getCurrentPosition(
+      function success(position) {
         userLocation.setCoordinates(position.coords.latitude, position.coords.longitude);
         googleGeocoding.convert(userLocation.latitude.toString() + "," + userLocation.longitude.toString())
-      });
-    });
-  }
-
-  ui.components.$button_submitLocationQuery.on("click", () => {
-    if (ui.components.$field_locationQuery.val() != "") {
-      googleGeocoding.convert( ui.components.$field_locationQuery.val() );
-    }
+      },
+      function failure(PositionError) {
+        alert("Denied: " + PositionError.message);
+        ui.setSearchText("Could not locate.");
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 10000,
+        maximumAge: 60000
+      }
+    );
   });
 
+  ui.$button_submitLocationQuery.on("click", () => {
+    console.log(ui.$field_locationSearch.val());
+    if (ui.$field_locationSearch.val() != "") {
+      googleGeocoding.convert( ui.$field_locationSearch.val() );
+    }
+  });
 }

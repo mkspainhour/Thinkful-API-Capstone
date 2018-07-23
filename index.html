@@ -20,45 +20,42 @@
 
 
 		<section id="view-welcome" class="view">
-
-			<header id="welcome-header">
-				<h1 class="app-title centered-text">What's Good?</h1>
-			</header>
-
-			<div id="welcome-body" class="wrapper">
-				<p class="standard-text centered-text">Not sure what’s popular around you? Headed somewhere new and aren’t sure what you’ll do when you get there? That's what I'm here for.</p>
-				<button type="button" id="button-lets-get-started" class="text-button" autofocus>Let's Get Started</button>
+			<h1 id="app-title" class="typography-app-title">WHERE</h1>
+			<div id="card-welcome" class="card">
+				<p id="welcome-message" class="typography-standard">Not sure what’s popular around you? Headed somewhere new and aren’t sure what you’ll do when you get there?</p>
 			</div>
-
-			<footer id="welcome-footer">
-				<p class="attributive-text centered-text">Powered by <a href="https://foursquare.com/about" class="link">Foursquare</a> & <a href="https://www.google.com/intl/en/about/our-company/" class="link">Google</a></p>
-			</footer>
-
+			<button id="button-lets-get-started" class="button text-button" type="button" autofocus>Let's Get Started</button>
+			<p id="welcome-credit" class="typography-credit">Designed & Developed by Marshall Spainhour</p>
 		</section>
+
+
+
+
 
 
 
 		<section id="view-search" class="view" style="display:none">
-
-				<form action="#" id="form-location-search">
-				<!-- <fieldset id="fieldset-location-search" name="location-search"> -->
-					<legend class="hidden">Location Entry</legend>
-
-					<button type="button" id="button-geolocate-user" aria-label="Use my location." class="icon-button">
-						<img id="svg-geolocate-user" class="icon" src="icons/geolocateUser.svg" alt="Use My Location">
+			
+			<header id="header-search-form">
+				<form action="#" role="search" id="form-search">
+					<button type="button" id="button-geolocate-user" class="button icon-button" title="Search using your location." aria-label="Search using your location.">
+						<img src="icons/geolocateUser.svg" alt="Geolocation Button Icon Missing">
 					</button>
-					
-					<input type="text" id="field-location-query" aria-label="Enter and submit a location to find nearby activities." class="search-field standard-text" placeholder="Location" required autofocus>
-					<label id="label-location-query" for="field-location-query" form="form-location-search" class="standard-text centered-text">Throw a city in the search bar, or use your current location, and let’s figure out what you could be doing.<br><br>(Entering construction zone. Converts roughly typed addresses and geocoordinates to complete addresses, and silently fetches Foursquare venue info and prints it to the console.)</label> 
-					
-					<button type="submit" for="form-location-search" id="button-submit-location-query" aria-label="Submit entered location." class="icon-button">
-						<img id="svg-search" class="icon" src="icons/search.svg" alt="Submit Search">
+					<input type="text" id="field-search" placeholder="Location" title="Enter and submit a location to find nearby activities." aria-label="Enter and submit a location to find nearby activities." required autofocus> 
+					<button type="submit" for="form-location-search" id="button-submit-search" title="Search for entered location." aria-label="Search for entered location." class="icon-button">
+						<img id="svg-search" src="icons/search.svg" alt="Submit Search">
 					</button>
-
-				<!-- </fieldset> -->
 				</form>
+			</header>
 
+			<div id="search-results-wrapper">
+				<!--Results rendered here...-->
+			</div>
 		</section>
+
+
+
+
 
 
 
