@@ -1,7 +1,6 @@
 
 googleMapsAPI = {
   mapOptions: {},
-  //$mapWrapper: ui.$map, //TODO
   activeMarker: null,
   setMapCenter: function(latitude, longitude) {
     //TODO

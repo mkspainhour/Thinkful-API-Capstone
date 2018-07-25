@@ -1,6 +1,7 @@
 const ui = {
   //State Variables
   $activeView: null,
+  searchResultsScrollPosition: null,
   
   //Welcome View component pointers
   $view_welcome: $("#view-welcome"),
@@ -14,25 +15,35 @@ const ui = {
   $wrapper_searchResults: $("#search-results-wrapper"),
 
   //Venue Detail View component pointers
-  $view_venueDetail: $("#view-venue-detail"),
+  $view_venueDetail: $("#view-venue-details"),
   //TODO
-  //$button_returnToSearchResults,
-  //$text_venueCategory,
-  //$text_venueName,
-  //$text_venuePrice,
-  //$text_venueClosingTime,
-  //$text_venueRating,
-  //$text_venueWebsite,
-  //$text_venuePhoneNumber,
-  //$map,
-  //$text_venueTemperature,
-  //$text_venuePrecipitation,
+  $button_returnToSearchResults: $("#button-back"),
+  $text_venueCategory: $("#text-venue-category"),
+  $text_venueName: $("#text-venue-name"),
+  $text_venuePrice: $("#text-venue-price"),
+  $text_venueClosingTime: $("#text-venue-closing-time"),
+  $text_venueRating: $("#text-venue-rating"),
+  $text_venueWebsite: $("#text-venue-website"),
+  $text_venuePhoneNumber: $("#text-venue-phone-number"),
+  $map: $("#map"),
+  $text_venueTemperature: $("#text-venue-temperature"),
+  $text_venuePrecipitation: $("#text-venue-precipitation"),
   $button_moreInfo: $("#button-more-info"),
 
   //UI Functions
-  moveToView: function($newView) {
+  moveToSearchView: function() {
     this.$activeView.fadeOut(350, () => {
-      this.$activeView = $newView;
+      this.$activeView = this.$view_search;
+      this.$activeView.fadeIn(350);
+      window.scroll(0, ui.searchResultsScrollPosition);
+    });
+  },
+  moveToDetailsView: function() {
+    ui.searchResultsScrollPosition = window.scrollY;
+    console.log("Scroll position logged as: ", ui.searchResultsScrollPosition);
+    this.$activeView.fadeOut(350, () => {
+      this.$activeView = this.$view_venueDetail;
+      window.scroll(0, 0);
       this.$activeView.fadeIn(350);
     });
   },
@@ -71,7 +82,19 @@ const ui = {
     })
   },
   showVenueDetailsFor: function(venue) {
+    //Venue Details View state resets
+    //TODO Polish system
+    $("#wrapper-venue-price").show();
 
+    ui.$text_venueCategory.html(venue.category);
+    ui.$text_venueName.html(venue.name);
+    venue.priceTier != null ? ui.$text_venuePrice.html(venue.priceTier) : $("#wrapper-venue-price").hide();
+    ui.$text_venueClosingTime.html(venue.closingTime);
+    ui.$text_venueRating.html(venue.rating + " from " + venue.votes + " ratings.");
+    ui.$text_venueWebsite.html( venue.website.replace(/(http:\/\/www.)|(https:\/\/www.)|(http:\/\/)|(https:\/\/)/g, "") );
+    ui.$text_venuePhoneNumber.html(venue.phoneNumber);
+    ui.searchResultsScrollPosition = window.scrollY;
+    ui.moveToDetailsView();
   }
 };
 
@@ -124,7 +147,7 @@ function startup() {
 function configureInitialEventListeners() {
   //Welcome View, Let's Get Started button
   ui.$button_letsGetStarted.on("click", function() {
-    ui.moveToView( ui.$view_search );
+    ui.moveToSearchView();
   });
 
   //Search View, Geolocate User button
@@ -135,5 +158,10 @@ function configureInitialEventListeners() {
   //Search View, Submit Search button
   ui.$button_submitSearch.on("click", function() {
     ui.submitButtonClicked();
+  });
+
+  //Venue Details View, Back button
+  ui.$button_returnToSearchResults.on("click", function() {
+    ui.moveToSearchView( ui.$view_search );
   });
 }

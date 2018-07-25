@@ -120,7 +120,6 @@ const foursquareAPI = {
       foursquareAPI.fetchedVenues[this.venueTargetIndex].votes = fetchedVenueDetails.ratingSignals;
     }
 
-    console.table(foursquareAPI.fetchedVenues[this.venueTargetIndex]);
-    //TODO ui.showVenueDetailsFor(foursquareAPI.fetchedVenus[this.venueTargetIndex])
+    ui.showVenueDetailsFor( foursquareAPI.fetchedVenues[this.venueTargetIndex] );
   }
 }

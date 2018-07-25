@@ -27,6 +27,9 @@ body {
 }
 main {
   padding: var(--spacing-unit);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 }
 .view {
   display: flex;
@@ -34,8 +37,8 @@ main {
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  min-height: 100%;
   width: 100%;
+  margin-bottom: var(--spacing-unit);
 }
 .card {
   padding: var(--spacing-unit);
@@ -61,7 +64,6 @@ main {
 .typography-overline {
   opacity: 0.6;
   font-size: 10px;
-  color: var(--color-dark);
   letter-spacing: 1.5px;
   line-height: 12px;
   font-weight: 400;
@@ -114,7 +116,7 @@ button {
   height: 48px; /*Accounts for the search bar and the top 2px of a .card's box-shadow*/
 }
 .text-button {
-  padding: 16px 24px;
+  padding: 16px 16px;
   width: 100%;
 }
 .icon-button {
@@ -131,7 +133,7 @@ button {
 
 /*#region => Component / Search Form */
 #header-search-form {
-  background-color: hsla(235, 40%, 52%, 3%);
+  background-color: hsla(235, 40%, 98%, 98%);
   width: 100%;
   z-index: 1;
   position: fixed;
@@ -246,13 +248,45 @@ input[type="text"] {
 
 
 /*#region ==> View / Venue Details */
+#view-venue-details {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: flex-start;
+  margin: 0 auto;
+  background-color: var(--color-main);
+  max-width: 400px;
+}
 .map {
   width: 100%;
   height: 30vh;
+  margin-top: 8px;
   overflow: hidden;
+  background-color: var(--color-light);
 }
 #button-more-info {
   margin-top: var(--spacing-unit);
+  background-color: var(--color-light);
+  color: var(--color-main);
+  box-shadow: var(--shadow-dark);
+}
+#button-back {
+  box-shadow: none;
+  background-color: hsla(0, 0%, 100%, 0);
+  position: relative;
+  top: -16px;
+  left: -16px;
+}
+#wrapper-detail-content {
+  width: 100%;
+  position: relative;
+  top: -16px;
+}
+.wrapper-venue-detail {
+  margin-top: 20px;
+}
+.wrapper-venue-detail:first-of-type {
 }
 /*#endregion  ==> View / Venue Details */
 
