@@ -24,29 +24,72 @@
 			<div id="card-welcome" class="card">
 				<p id="welcome-message" class="typography-standard">Not sure what’s popular around you? Headed somewhere new and aren’t sure what you’ll do when you get there?</p>
 			</div>
-			<button id="button-lets-get-started" class="button text-button" type="button">Let's Get Started</button>
+			<button type="button" class="text-button" id="button-lets-get-started">Let's Get Started</button>
 			<p id="welcome-credit" class="typography-credit">Designed & Developed by Marshall Spainhour</p>
+		</section>
+
+		<section id="view-search" class="view" style="display:none">
+			<header id="header-search-form">
+				<form action="#" role="search" id="form-search">
+					<button type="button" class="icon-button" id="button-geolocate-user" title="Search using your location." aria-label="Search using your location.">
+						<img src="resources/icons/geolocateUser.svg" alt="Geolocation Button Icon Missing">
+					</button>
+					<input type="text" id="field-search" placeholder="Location" title="Enter and submit a location to find nearby activities." aria-label="Enter and submit a location to find nearby activities." required autofocus> 
+					<button type="submit" class="icon-button" for="form-location-search" id="button-submit-search" title="Search for entered location." aria-label="Search for entered location.">
+						<img src="resources/icons/search.svg" alt="Submit Search">
+					</button>
+				</form>
+			</header>
+			<div id="search-results-wrapper">
+				<!--Results rendered here...-->
+			</div>
 		</section>
 
 
 
-		<section id="view-search" class="view" style="display:none">
-			
-			<header id="header-search-form">
-				<form action="#" role="search" id="form-search">
-					<button type="button" id="button-geolocate-user" class="button icon-button" title="Search using your location." aria-label="Search using your location.">
-						<img src="resources/icons/geolocateUser.svg" alt="Geolocation Button Icon Missing">
-					</button>
-					<input type="text" id="field-search" placeholder="Location" title="Enter and submit a location to find nearby activities." aria-label="Enter and submit a location to find nearby activities." required autofocus> 
-					<button type="submit" for="form-location-search" id="button-submit-search" title="Search for entered location." aria-label="Search for entered location." class="icon-button">
-						<img id="svg-search" src="resources/icons/search.svg" alt="Submit Search">
-					</button>
-				</form>
-			</header>
 
-			<div id="search-results-wrapper">
-				<!--Results rendered here...-->
+		<section id="view-venue-detail" class="view card" style="display:none">
+			<button type="button" class="icon-button" id="" title="Return to search results." aria-label="return to search results.">
+					<img src="resources/icons/back.svg" alt="Return">
+			</button>
+
+			<div id="wrapper-content">
+				<p class="typography-overline left-align">[Venue Category]</p>
+				<p class="left-align">[Venue Name]</p>
+				
+				<p class="typography-overline left-align">Price</p>
+				<p class="left-align">¢¢¢</p>
+
+				<p class="typography-overline left-align">Hours</p>
+				<p class="left-align">Closes at 12:00AM</p>
+
+				<p class="typography-overline left-align">The People Have Spoken</p>
+				<p class="left-align">[Venue Rating String]</p>
+
+				<p class="typography-overline left-align">Website</p>
+				<p class="left-align">[Venue Website]</p>
+
+				<p class="typography-overline left-align">Phone</p>
+				<p class="left-align">+1 (800) 555-CALL</p>
+				
+				<p class="typography-overline left-align">Over Here</p>
+				<div class="card map">
+					DO WHAT YOU WANT<br>
+					CAUSE A PIRATE IS FREE<br>
+					YOU ARE A PIRATE
+				</div>
+				
+				<p class="typography-overline left-align">[Uncomfortable]</p>
+				<p class="left-align">[95°]</p>
+				<p class="typography-overline left-align">[Maybe]</p>
+				<p class="left-align">[45% chance of rain]</p>
+
+				<p hidden>$text_venueTemperature</p>
+				<p hidden>$text_venuePrecipitation</p>
+				
+				<button type="button" class="text-button" id="button-more-info" title="Get more details for this venue on Foursquare.com" aria-label="Get more details for this venue on Foursquare.com">More info on Foursquare.com</button>
 			</div>
+
 		</section>
 
 
@@ -56,11 +99,10 @@
 	</main>
 	<!-- #region / Scripts -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="javascript/sessionFlags.js"></script>
-	<script src="javascript/ui.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvZhOq7cVJIJh9rchv-Owdfkn97f75qGQ&libraries=places"></script>
-	<script src="javascript/apis/google.js"></script>
-	<script	src="javascript/apis/foursquare.js"></script>
-	<script src="javascript/functionality.js"></script>
+	<script src="javascript/sessionFlags.js"></script>
+	<script src="javascript/apis/googleMapsAPI.js"></script>
+	<script	src="javascript/apis/foursquareAPI.js"></script>
+	<script src="javascript/app.js"></script>
 	<!--#endregion -->
 </body></html>

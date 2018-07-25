@@ -1,6 +1,7 @@
+
 html {
   --fonts: "Rubik", "SF UI Text", "Helvetica Neue", "Helvetica", sans-serif;
-  --color-main: #2233E6;
+  --color-main: hsl(235, 80%, 52%);
   --color-dark: #0B114D;
   --color-light: white;
   --color-interactible-background: var(--color-main);
@@ -20,7 +21,7 @@ body {
 
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-content: center;
   align-items: center;
 }
@@ -37,7 +38,7 @@ main {
   width: 100%;
 }
 .card {
-  padding: 16px;
+  padding: var(--spacing-unit);
   border-radius: 3px;
   box-shadow: var(--shadow-dark);
 }
@@ -46,56 +47,56 @@ main {
 
 
 
-/* #region TYPOGRAPHY */
-  .typography-app-title {
-    font-size: 40px;
-    font-weight: 900;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 24px;
-    color: var(--color-main);
-    text-shadow: var(--shadow-main);
-  }
-  .typography-overline {
-    opacity: 0.6;
-    font-size: 10px;
-    color: var(--color-dark);
-    letter-spacing: 1.5px;
-    line-height: 12px;
-    font-weight: 400;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-    white-space: no-wrap;
-  }
-  .typography-compact {
-    line-height: 20px;
-  }
-  .typography-credit {
-    font-size: 12px;
-    letter-spacing: 0.25px;
-    line-height: 16px;
-    color: var(--color-dark);
-    opacity: 0.5;
-  }
-  .left-align {
-    text-align: left;
-  }
-  .colored {
-    color: var(--color-main);
-  }
-  .dark {
-    color: var(--color-dark);
-  }
-  .light {
-    color: var(--color-light);
-  }
-/*#endregion TYPOGRAPHY*/
+/* #region => Typography */
+.typography-app-title {
+  font-size: 40px;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 24px;
+  color: var(--color-main);
+  text-shadow: var(--shadow-main);
+}
+.typography-overline {
+  opacity: 0.6;
+  font-size: 10px;
+  color: var(--color-dark);
+  letter-spacing: 1.5px;
+  line-height: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  white-space: no-wrap;
+}
+.typography-compact {
+  line-height: 20px;
+}
+.typography-credit {
+  font-size: 12px;
+  letter-spacing: 0.25px;
+  line-height: 16px;
+  color: var(--color-dark);
+  opacity: 0.5;
+}
+.left-align {
+  text-align: left;
+}
+.colored {
+  color: var(--color-main);
+}
+.dark {
+  color: var(--color-dark);
+}
+.light {
+  color: var(--color-light);
+}
+/*#endregion => Typography */
 
 
 
 
-/* #region BUTTONS */
+/* #region => Buttons */
 button {
   display: flex;
   flex-flow: column nowrap;
@@ -112,135 +113,154 @@ button {
   border-radius: 3px;
   height: 48px; /*Accounts for the search bar and the top 2px of a .card's box-shadow*/
 }
-  .text-button {
-    padding: 16px 24px;
-    width: 100%;
-  }
-  .icon-button {
-    width: 48px;
-    min-width: 48px;
-    height: 48px;
-    min-height: 48px;
-  }
-/*#endregion BUTTONS*/
+.text-button {
+  padding: 16px 24px;
+  width: 100%;
+}
+.icon-button {
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+}
+/*#endregion => Buttons */
 
 
 
 
 
-/*#region SEARCH FORM*/
+/*#region => Component / Search Form */
 #header-search-form {
-  background-color: white;
+  background-color: hsla(235, 40%, 52%, 3%);
   width: 100%;
   z-index: 1;
   position: fixed;
   top: 0;
   padding: var(--spacing-unit);
+  box-shadow: var(--shadow-dark);
 }
-  #form-search {
-    position: relative;
-    max-width: 500px;
-    margin: 0 auto;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-content: center;
-    align-items: center;
-    width: 100%;
-    border: 0;
-    padding: 0;
-    z-index: 1;
-  }
-    #button-geolocate-user {
-      margin-right: calc( var(--spacing-unit)/2 );
-    }
-    input[type="text"] {
-      height: 48px;
-      width: 100%;
-      padding: 16px;
-      padding-top: 17px;
-      padding-right: 48px; /*#button-submit-location-query's width + the internal padding*/
+#form-search {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  z-index: 1;
+}
+#button-geolocate-user {
+  margin-right: calc( var(--spacing-unit)/2 );
+}
+input[type="text"] {
+  height: 48px;
+  width: 100%;
+  padding: 16px;
+  padding-top: 17px;
+  padding-right: 48px; /*#button-submit-location-query's width + the internal padding*/
 
-      color: var(--color-dark);
-      border: none;
-      background-color: hsla(0, 0%, 0%, 0);
-      box-shadow: var(--shadow-dark);
-      border-radius: 3px;
-    }
-    #label-field-search { /* Center-screen search prompt */
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: -38%;
-      width: calc(100vw - calc( var(--spacing-unit)*2 ));
-      max-width: 423px;
-    }
-    #button-submit-search {
-      position: absolute;
-      right: 0;
-      z-index: 1;
-      background-color: hsla(0, 0%, 100%, 0);
-      box-shadow: none;
-    }
-  #search-results-wrapper {
-    position: relative;
-    top: calc(var(--spacing-unit) + 48px + 2px); /* Accounts for edge margins, search bar height, and top 2 pixels of box-shadow on the first .card .search-result. */
-    bottom: var(--spacing-unit);
-    width: 100%;
-    max-width: 500px;
-  }
-    .search-result {
-      display: flex;
-      flex-flow: column nowrap;
-      justify-content: center;
-      align-items: flex-start;
-      position: relative;
-      width: 100%;
-      padding: 16px;
-      padding-right: 41px;
-      background-color: var(--color-main);
-      box-shadow: var(--shadow-main);
-      margin-bottom: calc( var(--spacing-unit)/2 );
-      min-height: 78px;
-    }
-    .search-result:last-of-type {
-      margin-bottom: 0;
-    }
-      .svg-search-result-chevron {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 16px;
-      }
-/*#endregion SEARCH FORM*/
+  color: var(--color-dark);
+  border: none;
+  background-color: white;
+  box-shadow: var(--shadow-dark);
+  border-radius: 3px;
+}
+#button-submit-search {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  background-color: hsla(0, 0%, 100%, 0);
+  box-shadow: none;
+}
+/*#endregion => Component / Search Form */
 
 
 
 
 
-/*#region VIEW-SPECIFIC*/
-  #view-welcome {
-    justify-content: center;
-    margin: 0 auto;
-    max-width: 350px;
-  }
-    #app-title {
-      margin-bottom: 20vh;
-    }
-    #card-welcome {
-      margin-bottom: 16px;
-    }
-    #welcome-credit {
-      position: absolute;
-      bottom: var(--spacing-unit);
-    }
-/*#endregion*/
+/*#region  ==> View / Welcome */
+#view-welcome {
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 350px;
+}
+#app-title {
+  margin-top: 0;
+  margin-bottom: calc( var(--spacing-unit)*2 );
+}
+#card-welcome {
+  margin-bottom: var(--spacing-unit);
+}
+#welcome-credit {
+  position: absolute;
+  bottom: var(--spacing-unit);
+}
+/*#endregion ==> View / Welcome */
 
 
 
 
 
-/*#region UTILITY CLASSES*/
+/*#region => View / Search */
+#search-results-wrapper {
+  position: relative;
+  top: calc(var(--spacing-unit) + 48px + 2px); /* Accounts for edge margins, search bar height, and top 2 pixels of box-shadow on the first .card .search-result. */
+  bottom: var(--spacing-unit);
+  margin-top: var(--spacing-unit);
+  margin-bottom: var(--spacing-unit);
+  width: 100%;
+  max-width: 400px;
+}
+.search-result {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+  padding: 16px;
+  padding-right: 41px;
+  background-color: var(--color-main);
+  box-shadow: var(--shadow-main);
+  margin: calc( var(--spacing-unit)/2 ) 0;
+}
+.search-result:first-of-type {
+  margin-top: 0;
+}
+.search-result:last-of-type {
+  margin-bottom: 0;
+}
+.svg-search-result-chevron {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  right: var(--spacing-unit);
+}
+/*#endregion => Search Results */
+
+
+
+
+
+/*#region ==> View / Venue Details */
+.map {
+  width: 100%;
+  height: 30vh;
+  overflow: hidden;
+}
+#button-more-info {
+  margin-top: var(--spacing-unit);
+}
+/*#endregion  ==> View / Venue Details */
+
+
+
+
+
+/*#region => Utilities */
 .hidden {
   position: absolute;
   left: -100000px;
@@ -249,4 +269,4 @@ button {
   height: 1px;
   overflow: hidden;
 }
-/*#endregion UTILITY CLASSES*/
+/*#endregion => Utilities */
