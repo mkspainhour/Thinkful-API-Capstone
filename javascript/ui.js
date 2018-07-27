@@ -16,6 +16,7 @@ const ui = {
   $form_search: $("#js-form-search"),
   $button_geolocateUser: $("#js-button-geolocate-user"),
   $input_search: $("#js-input-search"),
+  $button_clearSearchText: $("#js-button-clear-search-text"),
   $button_submitSearch: $("#js-button-submit-search"),
   $wrapper_searchResults: $("#js-wrapper-search-results"),
 

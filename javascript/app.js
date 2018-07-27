@@ -37,6 +37,7 @@ $(function entryPoint() {
   }
   ui.$activeView = ui.$view_welcome;
   googleMapsAPI.initializeVenueMap();
+  ui.$button_clearSearchText.hide();
   ui.$wrapper_searchResults.hide(); //So that they can be faded in once fetched
   configureInitialEventListeners();
 });
@@ -46,29 +47,37 @@ function configureInitialEventListeners() {
   ui.$button_letsGetStarted.on("click", function () {
     ui.moveToSearchView();
   });
-
   //Search View, Geolocate User Button
   ui.$button_geolocateUser.on("click", function () {
     userLocation.nativelyGeolocate();
   });
-
-  //Search View, Submit Text Field
+  //Search View, Search Form
   ui.$form_search.on("submit", function(event) {
-    event.preventDefault();
+    event.preventDefault(); //To prevent the dreaded page refresh problem
     ui.submitButtonClicked();
   });
-
+  //Search View, Search Field
+  ui.$input_search.on("input", function() {
+    if(ui.$button_clearSearchText.css("display", "none")) {
+      ui.$input_search.css("padding-right", "96px");
+      ui.$button_clearSearchText.show();
+    }
+  });
+  //Search View, Clear Search Text Button
+  ui.$button_clearSearchText.on("click", function() {
+    ui.$input_search.val("");
+    ui.$button_clearSearchText.hide();
+    ui.$input_search.css("padding-right", "48px");
+  });
   //Search View, Submit Search Button
   ui.$button_submitSearch.on("submit", function (event) {
     event.preventDefault();
     ui.submitButtonClicked();
   });
-
   //Venue Details View, Back To Results Button
   ui.$button_backToResults.on("click", function () {
     ui.moveToSearchView();
   });
-
   //Venue Details View, See On Foursquare Button
   ui.$button_seeOnFoursquare.on("click", function (event) {
     window.open(ui.currentVenueFoursquareLink, "_blank");

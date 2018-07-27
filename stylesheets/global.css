@@ -184,12 +184,28 @@ button:hover {
   -moz-appearance: none;
 }
 
+#js-button-clear-search-text {
+  position: absolute;
+  right: calc(0px + 48px);
+  z-index: 1;
+  background-color: hsla(0, 0%, 100%, 0);
+  box-shadow: none;
+}
+#js-button-clear-search-text > img {
+  position: relative;
+  height: 20px;
+}
+
 #js-button-submit-search {
   position: absolute;
   right: 0;
   z-index: 1;
   background-color: hsla(0, 0%, 100%, 0);
   box-shadow: none;
+}
+#js-button-submit-search > img {
+  position: relative;
+  top: 1px;
 }
 /*#endregion => Component / Search Form */
 
