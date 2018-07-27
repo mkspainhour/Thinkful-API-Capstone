@@ -36,6 +36,8 @@ googleMapsAPI = {
   },
 
   geocoder: new google.maps.Geocoder(),
+  
+  previousSearchTerms: null,
   geocode: function (searchTerms) {
     this.convert(searchTerms)
       .then(this.conversionSucceeded)
@@ -79,6 +81,7 @@ googleMapsAPI = {
   },
   conversionSucceeded: function (results) {
     console.log(`googleMapsAPI.geocode(searchTerms) succeeded!`);
+    googleMapsAPI.previousSearchTerms = results[0].formatted_address;
     userLocation.setCoordinates(results[0].geometry.location.lat(), results[0].geometry.location.lng());
     ui.setSearchText( results[0].formatted_address );
     foursquareAPI.fetchRecommendationsAround(userLocation.latitude, userLocation.longitude);

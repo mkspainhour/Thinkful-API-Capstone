@@ -1,9 +1,11 @@
 const ui = {
-  //#region => Variables
   //State Variables
   $activeView: null,
   searchResultsScrollPosition: null,
   currentVenueFoursquareLink: null,
+
+  //Value Containers
+  fadeDuration: 250,
 
   //Welcome View component pointers
   $view_welcome: $("#js-view-welcome"),
@@ -39,23 +41,23 @@ const ui = {
   $wrapper_venuePrecipitation: $("#js-wrapper-venue-precipitation"),
   $text_venuePrecipitation: $("#js-text-venue-precipitation"),
   $button_seeOnFoursquare: $("#js-button-see-on-foursquare"),
-  //#endregion
 
   //UI Functions
   moveToSearchView: function () {
-    this.$activeView.fadeOut(350, () => {
+    this.$activeView.fadeOut(this.fadeDuration, () => {
       this.$activeView = this.$view_search;
-      this.$activeView.fadeIn(350);
+      this.$activeView.fadeIn(this.fadeDuration);
       window.scroll(0, ui.searchResultsScrollPosition);
     });
   },
 
-  moveToDetailsView: function () {
+  moveToDetailsView: function (venue) {
     ui.searchResultsScrollPosition = window.scrollY;
-    this.$activeView.fadeOut(350, () => {
+    this.$activeView.fadeOut(this.fadeDuration, () => {
       this.$activeView = this.$view_venueDetails;
       window.scroll(0, 0);
-      this.$activeView.fadeIn(350);
+      googleMapsAPI.setMapCenter(venue.latitude, venue.longitude);
+      this.$activeView.fadeIn(this.fadeDuration);
     });
   },
 
@@ -70,7 +72,7 @@ const ui = {
   submitButtonClicked: function () {
     let searchTerms = this.$input_search.val();
     //The search terms must not be blank and must include at least a character or digit
-    if (searchTerms.length > 0 && searchTerms.match(/[\w\d]/g)) {
+    if (searchTerms.length > 0 && searchTerms.match(/[\w\d]/g) && googleMapsAPI.previousSearchTerms != searchTerms) {
       googleMapsAPI.geocode(searchTerms);
     }
   },
@@ -91,8 +93,9 @@ const ui = {
       constructedVenueElements.push(currentVenueElement);
     }
     this.$wrapper_searchResults.html(constructedVenueElements);
-    this.disableGeolocatingIcon();
     this.addSearchResultEventListeners();
+    this.disableGeolocatingIcon();
+    this.$wrapper_searchResults.fadeIn(this.fadeDuration);
   },
 
   addSearchResultEventListeners: function () {
@@ -162,8 +165,7 @@ const ui = {
       this.$button_seeOnFoursquare.hide();
     }
 
-    googleMapsAPI.setMapCenter(venue.latitude, venue.longitude);
     ui.searchResultsScrollPosition = window.scrollY;
-    ui.moveToDetailsView();
+    ui.moveToDetailsView(venue);
   }
 };

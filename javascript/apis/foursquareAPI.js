@@ -19,9 +19,16 @@ class Venue { //TODO
 }
 
 const foursquareAPI = {
+  previousFetchCoordinates: {
+    latitude: null,
+    longitude: null
+  },
   fetchedVenues: [],
   fetchRecommendationsAround: function (latitude, longitude) {
-    $.ajax({
+    if (this.previousFetchCoordinates.latitude != latitude && this.previousFetchCoordinates.longitude != longitude) {
+      this.previousFetchCoordinates.latitude = latitude;
+      this.previousFetchCoordinates.longitude = longitude;
+      $.ajax({
         dataType: "json",
         url: "https://api.foursquare.com/v2/venues/explore",
         data: {
@@ -36,6 +43,10 @@ const foursquareAPI = {
       })
       .done(this.recommendationFetchSucceeded)
       .fail(this.recommendationFetchFailed);
+    }
+    else {
+      console.warn("Duplicate foursquareAPI.fetchRecommendationsAround(latitude, longitude) call circumvented.");
+    }
   },
   recommendationFetchFailed: function (jqXHR) {
     let errorCode = jqXHR.responseJSON.meta.code;
@@ -56,8 +67,6 @@ const foursquareAPI = {
 
     foursquareAPI.fetchedVenues = data.response.groups[0].items.map(function (item) {
       let newVenue = new Venue();
-
-      console.log(item.venue);
       newVenue.id = item.venue.id;
       newVenue.name = item.venue.name;
       newVenue.category = item.venue.categories[0].name;
@@ -67,12 +76,14 @@ const foursquareAPI = {
       newVenue.address[1] = item.venue.location.formattedAddress[1];
       return newVenue;
     });
-
     ui.renderVenues(foursquareAPI.fetchedVenues);
   },
 
+  alreadyDetailedVenueIDs: [],
   getVenueDetails: function (venue) {
-    $.ajax({
+    if(this.alreadyDetailedVenueIDs.includes(venue.id) == false) {
+      this.alreadyDetailedVenueIDs.push(venue.id);
+      $.ajax({
         dataType: "json",
         url: `https://api.foursquare.com/v2/venues/${venue.id}`,
         data: {
@@ -86,6 +97,11 @@ const foursquareAPI = {
       })
       .then(this.venueDetailsFetchSucceeded)
       .catch(this.venueDetailsFetchFailed);
+    }
+    else {
+      console.warn("Duplicate foursquareAPI.getVenueDetails(venue) call circumvented.");
+      ui.showVenueDetailsFor(venue);
+    }
   },
   venueDetailsFetchFailed: function (jqXHR) {
     let errorCode = jqXHR.responseJSON.meta.code;

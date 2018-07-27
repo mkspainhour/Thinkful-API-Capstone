@@ -238,6 +238,7 @@ button:hover {
   background-color: var(--color-main);
   box-shadow: var(--shadow-main);
   margin: calc( var(--spacing-unit)/2) 0;
+  cursor: pointer;
 }
 
 .search-result:first-of-type {
@@ -266,7 +267,7 @@ button:hover {
   align-items: flex-start;
   margin: 0 auto;
   background-color: var(--color-main);
-  max-width: 450px;
+  max-width: 500px;
 }
 
 #js-button-back-to-results {

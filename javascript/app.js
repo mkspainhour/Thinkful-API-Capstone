@@ -9,8 +9,8 @@ const userLocation = {
     ui.setSearchText("Locating...");
     ui.enableGeolocatingIcon();
     navigator.geolocation.getCurrentPosition(
-      function success(position) {
-        userLocation.setCoordinates(position.coords.latitude, position.coords.longitude);
+      function success(foundPosition) {
+        userLocation.setCoordinates(foundPosition.coords.latitude, foundPosition.coords.longitude);
         googleMapsAPI.geocode( userLocation.latitude.toString()+","+userLocation.longitude.toString() );
       },
       function failure(PositionError) {
@@ -37,6 +37,7 @@ $(function entryPoint() {
   }
   ui.$activeView = ui.$view_welcome;
   googleMapsAPI.initializeVenueMap();
+  ui.$wrapper_searchResults.hide(); //So that they can be faded in once fetched
   configureInitialEventListeners();
 });
 
