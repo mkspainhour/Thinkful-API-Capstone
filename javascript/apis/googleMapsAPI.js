@@ -1,34 +1,59 @@
-
 googleMapsAPI = {
-  mapOptions: {},
   activeMarker: null,
-  setMapCenter: function(latitude, longitude) {
-    //TODO
+  map: null,
+  setupMap: function () {
+    this.map = new google.maps.Map(ui.$map_wrapper[0], {
+      center: {
+        lat: 1,
+        lng: 1
+      },
+      zoom: 15,
+      clickableIcons: false,
+      draggable: false,
+      fullscreenControl: false,
+      keyboardShortcuts: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      draggableCursor: "default",
+      draggingCursor: "default",
+      panControl: false,
+      rotateControl: false,
+      gestureHandling: "none",
+      minZoom: 11,
+      maxZoom: 19
+    });
+    this.activeMarker = new google.maps.Marker({
+      position: this.map.getCenter(),
+      map: this.map
+    });
   },
-  setMapZoom: function(newZoomLevel) {
-    //TODO
-  },
-  setMapMarker: function(latitude, longitude) {
-    //TODO
+  setMapCenter: function (latitude, longitude) {
+    this.map.setCenter({
+      lat: latitude,
+      lng: longitude
+    });
+    this.activeMarker.setPosition(this.map.getCenter());
   },
 
   geocoder: new google.maps.Geocoder(),
-  geocode: function(searchTerms) {
+  geocode: function (searchTerms) {
     this.convert(searchTerms)
-    .then(this.conversionSucceeded)
-    .catch(this.conversionFailed);
+      .then(this.conversionSucceeded)
+      .catch(this.conversionFailed);
   },
-  convert: function(searchTerms) {
+  convert: function (searchTerms) {
     return new Promise((resolve, reject) => {
 
-      this.geocoder.geocode( {"address": searchTerms},
-      function(results, status) {
-        status === "OK" ? resolve(results) : reject(status);
-      });
+      this.geocoder.geocode({
+          "address": searchTerms
+        },
+        function (results, status) {
+          status === "OK" ? resolve(results) : reject(status);
+        });
 
     });
   },
-  conversionFailed: function(status) {
+  conversionFailed: function (status) {
     switch (status) {
       case "ZERO_RESULTS":
         ui.setSearchText("Zero results.");
@@ -52,12 +77,12 @@ googleMapsAPI = {
         break;
     }
   },
-  conversionSucceeded: function(results) {
+  conversionSucceeded: function (results) {
     console.log(`googleMapsAPI.geocode(searchTerms) succeeded!`);
-    userLocation.setCoordinates( results[0].geometry.location.lat(), results[0].geometry.location.lng() );
-    userLocation.googlePlaceID = results[0].place_id;
-    userLocation.formattedAddress = results[0].formatted_address;
-    ui.setSearchText( userLocation.formattedAddress );
-    foursquareAPI.fetchRecommendationsAround(userLocation.latitude, userLocation.longitude);
+    session.setCoordinates(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+    session.googlePlaceID = results[0].place_id;
+    session.formattedAddress = results[0].formatted_address;
+    ui.setSearchText(session.formattedAddress);
+    foursquareAPI.fetchRecommendationsAround(session.latitude, session.longitude);
   },
 };

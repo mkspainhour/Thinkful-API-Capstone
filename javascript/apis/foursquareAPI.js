@@ -3,12 +3,14 @@ class Venue { //TODO
     //Unlimited calls
     this.id = null;
     this.name = null;
-    this.category = null;
+    this.type = null;
+    this.foursquareURL = null;
     this.latitude = null;
     this.longitude = null;
+    this.address = [];
     //Premium calls (500/day)
-    this.priceTier = null;
-    this.closingTime = null;
+    this.price = null;
+    this.hours = null;
     this.website = null;
     this.phoneNumber = null;
     this.rating = null;
@@ -18,26 +20,26 @@ class Venue { //TODO
 
 const foursquareAPI = {
   fetchedVenues: [],
-  fetchRecommendationsAround: function(latitude, longitude) {
+  fetchRecommendationsAround: function (latitude, longitude) {
     $.ajax({
-      dataType: "json",
-      url: "https://api.foursquare.com/v2/venues/explore",
-      data: {
-        ll: `${latitude},${longitude}`,
-        radius: 10000, //meters
-        limit: 50, //results
-        openNow: true,
-        client_id: "JVNYUDCL0XHG00XHJPAIXW5G3GWPMCMWERUU2THM2KXHLSOG",
-        client_secret: "4ZC4TTXFAZM5QVC1SS2MQLYTR50R0A2OAOVPLN1UR5GIHSQB",
-        v: "20180718"
-      }
-    })
-    .done(this.recommendationFetchSucceeded)
-    .fail(this.recommendationFetchFailed);
+        dataType: "json",
+        url: "https://api.foursquare.com/v2/venues/explore",
+        data: {
+          ll: `${latitude},${longitude}`,
+          radius: 10000, //meters
+          limit: 50, //results
+          openNow: true,
+          client_id: "JVNYUDCL0XHG00XHJPAIXW5G3GWPMCMWERUU2THM2KXHLSOG",
+          client_secret: "4ZC4TTXFAZM5QVC1SS2MQLYTR50R0A2OAOVPLN1UR5GIHSQB",
+          v: "20180718"
+        }
+      })
+      .done(this.recommendationFetchSucceeded)
+      .fail(this.recommendationFetchFailed);
   },
-  recommendationFetchFailed: function(jqXHR) {
+  recommendationFetchFailed: function (jqXHR) {
     let errorCode = jqXHR.responseJSON.meta.code;
-    switch(errorCode) {
+    switch (errorCode) {
       case 400:
         console.error("foursquareAPI.getRecommendationsAround(latitude, longitude) failed due to a malformed or missing $.ajax() call parameter.")
         break;
@@ -46,46 +48,48 @@ const foursquareAPI = {
         break;
     };
   },
-  recommendationFetchSucceeded: function(data) {
+  recommendationFetchSucceeded: function (data) {
     console.log(`foursquareAPI.fetchRecommendationsAround(latitude, longitude) succeeded!`);
     if ("warning" in data.response) {
       console.warn(`However, there was a warning included: "${data.response.warning.text}"`);
     }
 
-    foursquareAPI.fetchedVenues = data.response.groups[0].items.map(function(item) {
+    foursquareAPI.fetchedVenues = data.response.groups[0].items.map(function (item) {
       let newVenue = new Venue();
 
+      console.log(item.venue);
       newVenue.id = item.venue.id;
       newVenue.name = item.venue.name;
       newVenue.category = item.venue.categories[0].name;
       newVenue.latitude = item.venue.location.lat;
       newVenue.longitude = item.venue.location.lng;
-      
+      newVenue.address[0] = item.venue.location.formattedAddress[0];
+      newVenue.address[1] = item.venue.location.formattedAddress[1];
       return newVenue;
     });
 
     ui.renderVenues(foursquareAPI.fetchedVenues);
   },
 
-  getVenueDetails: function(venue) {
+  getVenueDetails: function (venue) {
     $.ajax({
-      dataType: "json",
-      url: `https://api.foursquare.com/v2/venues/${venue.id}`,
-      data: {
-        client_id: "JVNYUDCL0XHG00XHJPAIXW5G3GWPMCMWERUU2THM2KXHLSOG",
-        client_secret: "4ZC4TTXFAZM5QVC1SS2MQLYTR50R0A2OAOVPLN1UR5GIHSQB",
-        v: "20180718"
-      },
-      //The index of the Venue object in the foursquareAPI.fetchedVenues array that is receiving details
-      venueTargetIndex: foursquareAPI.fetchedVenues.indexOf(venue)
-      //Passed through here so that the venueDetailsFetchSucceeded() method can utilize it
-    })
-    .done(this.venueDetailsFetchSucceeded)
-    .fail(this.venueDetailsFetchFailed);
+        dataType: "json",
+        url: `https://api.foursquare.com/v2/venues/${venue.id}`,
+        data: {
+          client_id: "JVNYUDCL0XHG00XHJPAIXW5G3GWPMCMWERUU2THM2KXHLSOG",
+          client_secret: "4ZC4TTXFAZM5QVC1SS2MQLYTR50R0A2OAOVPLN1UR5GIHSQB",
+          v: "20180718"
+        },
+        //The index of the Venue object in the foursquareAPI.fetchedVenues array that is receiving details
+        venueTargetIndex: foursquareAPI.fetchedVenues.indexOf(venue)
+        //Passed through here so that the venueDetailsFetchSucceeded() method can utilize it
+      })
+      .then(this.venueDetailsFetchSucceeded)
+      .catch(this.venueDetailsFetchFailed);
   },
-  venueDetailsFetchFailed: function(jqXHR) {
+  venueDetailsFetchFailed: function (jqXHR) {
     let errorCode = jqXHR.responseJSON.meta.code;
-    switch(errorCode) {
+    switch (errorCode) {
       case 400:
         console.error("foursquareAPI.getVenueDetails(venue) failed due to a malformed or missing $.ajax() call parameter.")
         break;
@@ -97,15 +101,15 @@ const foursquareAPI = {
         break;
     };
   },
-  venueDetailsFetchSucceeded: function(data) {
+  venueDetailsFetchSucceeded: function (data) {
     console.log("foursquareAPI.getVenueDetails(venue) succeeded!");
     let fetchedVenueDetails = data.response.venue;
 
     if ("price" in fetchedVenueDetails) {
-      foursquareAPI.fetchedVenues[this.venueTargetIndex].priceTier = "$".repeat(fetchedVenueDetails.price.tier);
+      foursquareAPI.fetchedVenues[this.venueTargetIndex].price = "$".repeat(fetchedVenueDetails.price.tier);
     }
     if ("hours" in fetchedVenueDetails) {
-      foursquareAPI.fetchedVenues[this.venueTargetIndex].closingTime = fetchedVenueDetails.hours.status;
+      foursquareAPI.fetchedVenues[this.venueTargetIndex].hours = fetchedVenueDetails.hours.status;
     }
     if ("url" in fetchedVenueDetails) {
       foursquareAPI.fetchedVenues[this.venueTargetIndex].website = fetchedVenueDetails.url;
@@ -119,7 +123,9 @@ const foursquareAPI = {
     if ("ratingSignals" in fetchedVenueDetails) {
       foursquareAPI.fetchedVenues[this.venueTargetIndex].votes = fetchedVenueDetails.ratingSignals;
     }
-
-    ui.showVenueDetailsFor( foursquareAPI.fetchedVenues[this.venueTargetIndex] );
+    if ("canonicalUrl" in fetchedVenueDetails) {
+      foursquareAPI.fetchedVenues[this.venueTargetIndex].foursquareURL = fetchedVenueDetails.canonicalUrl;
+    }
+    ui.showVenueDetailsFor(foursquareAPI.fetchedVenues[this.venueTargetIndex]);
   }
 }

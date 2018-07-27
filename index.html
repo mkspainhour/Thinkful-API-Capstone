@@ -1,11 +1,12 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>WHERE</title>
 	<meta name="application-name" content="WHERE">
-	<meta name="description" content="At-a-glance activity suggestions.">
+	<meta name="description" content="At-a-glance activity options.">
 	<meta name="author" content="Marshall Spainhour">
 	<!--STYLESHEETS-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
@@ -13,100 +14,114 @@
 	<link rel="stylesheet" href="stylesheets/resets.css">
 	<link rel="stylesheet" href="stylesheets/global.css">
 </head>
-	<body><main role="main">
+
+<body>
+	<main role="main">
 
 
 
 
 
-		<section id="view-welcome" class="view">
+		<section id="js-view-welcome" class="view">
 
-			<div id="wrapper-app-title">
-				<h1 id="app-title" class="typography-app-title">WHERE</h1>
+			<div id="wrapper-welcome-app-title">
+				<h1 id="welcome-app-title" class="typography-app-title">WHERE</h1>
 			</div>
 
-			<div id="wrapper-content">
-				<div id="card-welcome" class="card">
-					<p id="welcome-message" class="typography-standard">Not sure what’s popular around you? Headed somewhere new and aren’t sure what you’ll do when you get there?</p>
+			<div id="wrapper-welcome-body">
+				<div id="card-welcome-message" class="card">
+					<p id="welcome-message">Not sure what’s popular around you? Headed somewhere new and aren’t sure what you’ll do when you get there?</p>
 				</div>
-				<button type="button" class="text-button" id="button-lets-get-started">Let's Get Started</button>
+				<button type="button" class="text-button" id="js-button-lets-get-started">Let's Get Started</button>
 			</div>
-			<p id="welcome-credit" class="typography-credit">Designed & Developed by Marshall Spainhour</p>
+
+			<p id="welcome-credit" class="typography-credit" aria-label="author credits">Designed & Developed by Marshall Spainhour</p>
 
 		</section>
 
-		<section id="view-search" class="view" style="display:none">
-			<header id="header-search-form">
+
+
+		<section id="js-view-search" class="view" style="display:none">
+
+			<header id="header-search">
 				<form action="#" role="search" id="form-search">
-					<button type="button" class="icon-button" id="button-geolocate-user" title="Search using your location." aria-label="Search using your location.">
-						<img src="resources/icons/geolocateUser.svg" alt="Geolocation Button Icon Missing">
+
+					<button type="button" class="icon-button" id="js-button-geolocate-user" title="Search for venues using your location." aria-label="use my mocation mutton">
+						<img src="resources/icons/geolocateUser.svg" alt="Use My Location">
 					</button>
-					<input type="text" id="field-search" placeholder="Location" title="Enter and submit a location to find nearby activities." aria-label="Enter and submit a location to find nearby activities." required autofocus> 
-					<button type="submit" class="icon-button" for="form-location-search" id="button-submit-search" title="Search for entered location." aria-label="Search for entered location.">
+
+					<input type="text" id="js-input-search" placeholder="Enter Location" title="Enter and submit a location to search for nearby activities."
+					  aria-label="text field for search terms" required autofocus>
+
+					<button type="submit" class="icon-button" for="form-search" id="js-button-submit-search" title="Search for location entered in the text field."
+					  aria-label="submit search button">
 						<img src="resources/icons/search.svg" alt="Submit Search">
 					</button>
+
 				</form>
 			</header>
-			<div id="search-results-wrapper">
+
+			<div id="js-wrapper-search-results">
 				<!--Results rendered here...-->
 			</div>
 		</section>
 
-		<section id="view-venue-details" class="view card" style="display:none">
-			<button type="button" class="icon-button" id="button-back" title="Return to search results." aria-label="return to search results.">
-					<img src="resources/icons/back.svg" alt="Return">
+		<section id="js-view-venue-details" class="view card" style="display:none">
+
+			<button type="button" class="icon-button" id="js-button-back-to-results" title="Return to search results." aria-label="back">
+				<img src="resources/icons/back.svg" alt="Back">
 			</button>
 
-			<div id="wrapper-detail-content" class="light">
+			<div id="wrapper-venue-details" class="left-align light">
 
-				<div class="wrapper-venue-detail">
-					<p id="text-venue-category" class="typography-overline left-align">BBQ Joint</p>
-					<p id="text-venue-name" class="left-align">Q39</p>
-				</div>
-				
-				<div id="wrapper-venue-price" class="wrapper-venue-detail">
-					<p class="typography-overline left-align">Price</p>
-					<p id="text-venue-price" class="left-align">$$</p>
+				<div class="wrapper-detail">
+					<p id="js-text-venue-type" class="typography-overline">Venue Type</p>
+					<p id="js-text-venue-name">Venue Name</p>
 				</div>
 
-				<div class="wrapper-venue-detail">
-					<p class="typography-overline left-align">Hours</p>
-					<p id="text-venue-closing-time" class="left-align">Closes at 10:30pm</p>
+				<div id="js-wrapper-venue-price" class="wrapper-detail">
+					<p class="typography-overline">Price</p>
+					<p id="js-text-venue-price">[Missing]</p>
 				</div>
 
-				<div class="wrapper-venue-detail">
-					<p class="typography-overline left-align">The People Have Spoken</p>
-					<p id="text-venue-rating" class="left-align">9.7 from 496 ratings</p>
+				<div id="js-wrapper-venue-hours" class="wrapper-detail">
+					<p class="typography-overline">Hours</p>
+					<p id="js-text-venue-hours">Closes at 11:59pm</p>
 				</div>
 
-				<div class="wrapper-venue-detail">
-					<p class="typography-overline left-align">Website</p>
-					<p id="text-venue-website" class="left-align">www.q39kc.com</p>
+				<div id="js-wrapper-venue-rating" class="wrapper-detail">
+					<p class="typography-overline">The People Have Spoken</p>
+					<p id="js-text-venue-rating">9.9 from 123 ratings</p>
 				</div>
 
-				<div class="wrapper-venue-detail">
-					<p class="typography-overline left-align">Phone</p>
-					<p id="text-venue-phone-number" class="left-align">+1 (800) 555-CALL</p>
+				<div id="wrapper-venue-website" class="wrapper-detail">
+					<p class="typography-overline">Website</p>
+					<a id="js-text-venue-website" href="" class="light" target="_blank">www.web.site</a>
 				</div>
-				
-				<div class="wrapper-venue-detail">
-					<p class="typography-overline left-align">Over Here</p>
-					<div id="map" class="card map">
+
+				<div id="js-wrapper-venue-phone-number" class="wrapper-detail">
+					<p class="typography-overline">Phone</p>
+					<a id="js-text-venue-phone-number" class="light" href="tel:">+1 (800) 555-CALL</a>
+				</div>
+
+				<div class="wrapper-detail">
+					<p class="typography-overline">Find Them Over Here</p>
+					<div id="map-wrapper" class="card map">
 						<!--Venue map renders here...-->
 					</div>
+					<a id="js-text-venue-address" class="light" href="">[Address]</a>
 				</div>
-				
-				<p hidden class="typography-overline left-align">[Uncomfortable]</p>
-				<p hidden id="text-venue-temperature" class="left-align">[95°]</p>
-				<p hidden class="typography-overline left-align">[Maybe]</p>
-				<p hidden id="text-venue-precipitation" class="left-align">[45% chance of rain]</p>
-				
-				<button type="button" class="text-button" id="button-more-info" title="Get more details for this venue on Foursquare.com" aria-label="Get more details for this venue on Foursquare.com">See on Foursquare.com</button>
+
+				<div id="js-wrapper-venue-temperature" class="wrapper-detail">
+					<p class="typography-overline left-align">Temperature</p>
+					<p id="js-text-venue-temperature" class="left-align">Fetching...</p>
+				</div>
+
+				<button type="button" class="text-button" id="js-button-see-on-foursquare" title="Get more details for this venue on Foursquare.com"
+				  aria-label="more on foursquare.com">See on Foursquare.com</button>
 			</div>
 
 		</section>
-
-
 
 
 
@@ -115,8 +130,12 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvZhOq7cVJIJh9rchv-Owdfkn97f75qGQ&libraries=places"></script>
 	<script src="javascript/sessionFlags.js"></script>
+	<script src="javascript/ui.js"></script>
 	<script src="javascript/apis/googleMapsAPI.js"></script>
-	<script	src="javascript/apis/foursquareAPI.js"></script>
+	<script src="javascript/apis/foursquareAPI.js"></script>
+	<script src="javascript/apis/nationalWeatherServiceAPI.js"></script>
 	<script src="javascript/app.js"></script>
 	<!--#endregion -->
-</body></html>
+</body>
+
+</html>

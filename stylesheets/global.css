@@ -1,4 +1,3 @@
-
 html {
   --fonts: "Rubik", "SF UI Text", "Helvetica Neue", "Helvetica", sans-serif;
   --color-main: hsl(235, 80%, 52%);
@@ -10,6 +9,7 @@ html {
   --shadow-dark: 0 1px 2px hsla(235, 75%, 17%, 0.20), 0 1px 3px hsla(235, 75%, 17%, 0.10);
   --spacing-unit: calc(8px + 5vmin);
 }
+
 body {
   background-color: var(--color-background);
   font-family: var(--fonts);
@@ -18,19 +18,20 @@ body {
   line-height: 24px;
   color: var(--color-dark);
   text-align: center;
-
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-content: center;
   align-items: center;
 }
+
 main {
   padding: var(--spacing-unit);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
 }
+
 .view {
   display: flex;
   flex-flow: column nowrap;
@@ -40,14 +41,12 @@ main {
   width: 100%;
   margin-bottom: var(--spacing-unit);
 }
+
 .card {
   padding: var(--spacing-unit);
   border-radius: 3px;
   box-shadow: var(--shadow-dark);
 }
-
-
-
 
 
 /* #region => Typography */
@@ -57,10 +56,11 @@ main {
   font-style: italic;
   text-transform: uppercase;
   letter-spacing: 1px;
-  line-height: 24px;
+  line-height: 40px;
   color: var(--color-main);
   text-shadow: var(--shadow-main);
 }
+
 .typography-overline {
   opacity: 0.6;
   font-size: 10px;
@@ -71,9 +71,11 @@ main {
   margin-bottom: 4px;
   white-space: no-wrap;
 }
+
 .typography-compact {
   line-height: 20px;
 }
+
 .typography-credit {
   font-size: 12px;
   letter-spacing: 0.25px;
@@ -81,21 +83,23 @@ main {
   color: var(--color-dark);
   opacity: 0.5;
 }
+
 .left-align {
   text-align: left;
 }
+
 .colored {
   color: var(--color-main);
 }
+
 .dark {
   color: var(--color-dark);
 }
+
 .light {
   color: var(--color-light);
 }
 /*#endregion => Typography */
-
-
 
 
 /* #region => Buttons */
@@ -105,7 +109,6 @@ button {
   justify-content: center;
   align-content: center;
   align-items: center;
-
   line-height: 16px;
   color: var(--color-light);
   letter-spacing: 0.5px;
@@ -113,12 +116,15 @@ button {
   background-color: var(--color-main);
   box-shadow: var(--shadow-main);
   border-radius: 3px;
-  height: 48px; /*Accounts for the search bar and the top 2px of a .card's box-shadow*/
+  height: 48px;
+  /*Accounts for the search bar and the top 2px of a .card's box-shadow*/
 }
+
 .text-button {
   padding: 16px 16px;
   width: 100%;
 }
+
 .icon-button {
   width: 48px;
   min-width: 48px;
@@ -128,12 +134,9 @@ button {
 /*#endregion => Buttons */
 
 
-
-
-
 /*#region => Component / Search Form */
-#header-search-form {
-  background-color: hsla(235, 40%, 98%, 98%);
+#header-search {
+  background-color: hsla(235, 40%, 99%, 99);
   width: 100%;
   z-index: 1;
   position: fixed;
@@ -141,6 +144,7 @@ button {
   padding: var(--spacing-unit);
   box-shadow: var(--shadow-dark);
 }
+
 #form-search {
   position: relative;
   max-width: 500px;
@@ -155,23 +159,26 @@ button {
   padding: 0;
   z-index: 1;
 }
-#button-geolocate-user {
-  margin-right: calc( var(--spacing-unit)/2 );
+
+#js-button-geolocate-user {
+  margin-right: calc( var(--spacing-unit)/2);
 }
-input[type="text"] {
+
+#js-input-search {
   height: 48px;
   width: 100%;
   padding: 16px;
   padding-top: 17px;
-  padding-right: 48px; /*#button-submit-location-query's width + the internal padding*/
-
+  padding-right: 48px;
+  /*#button-submit-location-query's width + the internal padding*/
   color: var(--color-dark);
   border: none;
   background-color: white;
   box-shadow: var(--shadow-dark);
   border-radius: 3px;
 }
-#button-submit-search {
+
+#js-button-submit-search {
   position: absolute;
   right: 0;
   z-index: 1;
@@ -181,22 +188,22 @@ input[type="text"] {
 /*#endregion => Component / Search Form */
 
 
-
-
-
 /*#region  ==> View / Welcome */
-#view-welcome {
+#js-view-welcome {
   justify-content: center;
   margin: 0 auto;
   max-width: 350px;
 }
-#app-title {
+
+#welcome-app-title {
   margin-top: 0;
-  margin-bottom: calc( var(--spacing-unit)*2 );
+  margin-bottom: calc( var(--spacing-unit)*2);
 }
-#card-welcome {
+
+#card-welcome-message {
   margin-bottom: var(--spacing-unit);
 }
+
 #welcome-credit {
   position: absolute;
   bottom: var(--spacing-unit);
@@ -204,19 +211,18 @@ input[type="text"] {
 /*#endregion ==> View / Welcome */
 
 
-
-
-
 /*#region => View / Search */
-#search-results-wrapper {
+#js-wrapper-search-results {
   position: relative;
-  top: calc(var(--spacing-unit) + 48px + 2px); /* Accounts for edge margins, search bar height, and top 2 pixels of box-shadow on the first .card .search-result. */
+  top: calc(var(--spacing-unit) + 48px + 2px);
+  /* Accounts for edge margins, search bar height, and top 2 pixels of box-shadow on the first .card .search-result. */
   bottom: var(--spacing-unit);
   margin-top: var(--spacing-unit);
   margin-bottom: var(--spacing-unit);
   width: 100%;
   max-width: 400px;
 }
+
 .search-result {
   display: flex;
   flex-flow: column nowrap;
@@ -228,27 +234,28 @@ input[type="text"] {
   padding-right: 41px;
   background-color: var(--color-main);
   box-shadow: var(--shadow-main);
-  margin: calc( var(--spacing-unit)/2 ) 0;
+  margin: calc( var(--spacing-unit)/2) 0;
 }
+
 .search-result:first-of-type {
   margin-top: 0;
 }
+
 .search-result:last-of-type {
   margin-bottom: 0;
 }
+
 .svg-search-result-chevron {
   position: absolute;
-  top: 50%; transform: translateY(-50%);
-  right: var(--spacing-unit);
+  top: 50%;
+  transform: translateY(-50%);
+  right: 16px;
 }
 /*#endregion => Search Results */
 
 
-
-
-
 /*#region ==> View / Venue Details */
-#view-venue-details {
+#js-view-venue-details {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -256,45 +263,50 @@ input[type="text"] {
   align-items: flex-start;
   margin: 0 auto;
   background-color: var(--color-main);
-  max-width: 400px;
+  max-width: 450px;
 }
-.map {
-  width: 100%;
-  height: 30vh;
-  margin-top: 8px;
-  overflow: hidden;
-  background-color: var(--color-light);
-}
-#button-more-info {
-  margin-top: var(--spacing-unit);
-  background-color: var(--color-light);
-  color: var(--color-main);
-  box-shadow: var(--shadow-dark);
-}
-#button-back {
+
+#js-button-back-to-results {
   box-shadow: none;
   background-color: hsla(0, 0%, 100%, 0);
   position: relative;
   top: -16px;
   left: -16px;
 }
-#wrapper-detail-content {
+
+#js-text-venue-website {
+  word-wrap: break-word;
+}
+
+#map-wrapper {
+  width: 100%;
+  height: 36vh;
+  margin-top: 10px;
+  margin-bottom: 6px;
+  overflow: hidden;
+  background-color: var(--color-light);
+}
+
+#js-button-see-on-foursquare {
+  margin-top: var(--spacing-unit);
+  background-color: var(--color-light);
+  color: var(--color-main);
+  box-shadow: var(--shadow-dark);
+}
+
+#wrapper-venue-details {
   width: 100%;
   position: relative;
-  top: -16px;
+  margin-top: -16px;
 }
-.wrapper-venue-detail {
-  margin-top: 20px;
-}
-.wrapper-venue-detail:first-of-type {
+
+.wrapper-detail {
+  margin-top: 24px;
 }
 /*#endregion  ==> View / Venue Details */
 
 
-
-
-
-/*#region => Utilities */
+/*#region => Utility Classes */
 .hidden {
   position: absolute;
   left: -100000px;
@@ -303,4 +315,4 @@ input[type="text"] {
   height: 1px;
   overflow: hidden;
 }
-/*#endregion => Utilities */
+/*#endregion => Utility Classes */
