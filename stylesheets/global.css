@@ -161,7 +161,6 @@ button:hover {
   border: 0;
   padding: 0;
   z-index: 1;
-  -webkit-appearance: none;
 }
 
 #js-button-geolocate-user {
@@ -180,6 +179,9 @@ button:hover {
   background-color: white;
   box-shadow: var(--shadow-dark);
   border-radius: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  -moz-appearance: none;
 }
 
 #js-button-submit-search {
