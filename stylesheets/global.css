@@ -208,8 +208,7 @@ button:hover {
 }
 
 #welcome-credit {
-  position: absolute;
-  bottom: var(--spacing-unit);
+  margin-top: var(--spacing-unit);
 }
 /*#endregion ==> View / Welcome */
 
