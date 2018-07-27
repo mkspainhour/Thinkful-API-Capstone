@@ -59,7 +59,8 @@ function configureInitialEventListeners() {
   });
 
   //Search View, Submit Search Button
-  ui.$button_submitSearch.on("click", function () {
+  ui.$button_submitSearch.on("submit", function (event) {
+    event.preventDefault();
     ui.submitButtonClicked();
   });
 
