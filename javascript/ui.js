@@ -126,7 +126,7 @@ const ui = {
     }
 
     if (venue.rating) {
-      this.$text_venueRating.html(venue.rating + " out of " + venue.votes + " ratings.");
+      this.$text_venueRating.html(venue.rating + "/10 from " + venue.votes + " ratings");
       this.$wrapper_venueRating.show();
     } else {
       this.$wrapper_venueRating.hide();
