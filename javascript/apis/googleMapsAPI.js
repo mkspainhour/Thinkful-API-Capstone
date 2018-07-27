@@ -1,7 +1,7 @@
 googleMapsAPI = {
   activeMarker: null,
   map: null,
-  setupMap: function () {
+  initializeVenueMap: function () {
     this.map = new google.maps.Map(ui.$map_wrapper[0], {
       center: {
         lat: 1,
@@ -79,10 +79,8 @@ googleMapsAPI = {
   },
   conversionSucceeded: function (results) {
     console.log(`googleMapsAPI.geocode(searchTerms) succeeded!`);
-    session.setCoordinates(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-    session.googlePlaceID = results[0].place_id;
-    session.formattedAddress = results[0].formatted_address;
-    ui.setSearchText(session.formattedAddress);
-    foursquareAPI.fetchRecommendationsAround(session.latitude, session.longitude);
+    userLocation.setCoordinates(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+    ui.setSearchText( results[0].formatted_address );
+    foursquareAPI.fetchRecommendationsAround(userLocation.latitude, userLocation.longitude);
   },
 };

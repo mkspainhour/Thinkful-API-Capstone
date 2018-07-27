@@ -119,6 +119,9 @@ button {
   height: 48px;
   /*Accounts for the search bar and the top 2px of a .card's box-shadow*/
 }
+button:hover {
+  cursor: pointer;
+}
 
 .text-button {
   padding: 16px 16px;
@@ -192,7 +195,7 @@ button {
 #js-view-welcome {
   justify-content: center;
   margin: 0 auto;
-  max-width: 350px;
+  max-width: 380px;
 }
 
 #welcome-app-title {

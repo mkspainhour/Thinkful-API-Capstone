@@ -59,6 +59,14 @@ const ui = {
     });
   },
 
+  enableGeolocatingIcon: function () {
+    this.$button_geolocateUser.children("img").attr("src", "resources/icons/locatingUser.svg");
+  },
+
+  disableGeolocatingIcon: function() {
+    this.$button_geolocateUser.children("img").attr("src", "resources/icons/geolocateUser.svg");
+  },
+
   submitButtonClicked: function () {
     let searchTerms = this.$input_search.val();
     //The search terms must not be blank and must include at least a character or digit
@@ -83,6 +91,7 @@ const ui = {
       constructedVenueElements.push(currentVenueElement);
     }
     this.$wrapper_searchResults.html(constructedVenueElements);
+    this.disableGeolocatingIcon();
     this.addSearchResultEventListeners();
   },
 

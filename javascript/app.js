@@ -1,23 +1,25 @@
-const session = { //Complete
+const userLocation = {
   latitude: null,
   longitude: null,
-  googlePlaceID: null,
-  formattedAddress: null,
-  setCoordinates: function (newLatitude, newLongitude) { //Complete
+  setCoordinates: function (newLatitude, newLongitude) {
     this.latitude = newLatitude;
     this.longitude = newLongitude;
   },
   nativelyGeolocate: function () {
     ui.setSearchText("Locating...");
+    ui.enableGeolocatingIcon();
     navigator.geolocation.getCurrentPosition(
       function success(position) {
-        session.setCoordinates(position.coords.latitude, position.coords.longitude);
-        googleMapsAPI.geocode(session.latitude.toString() + "," + session.longitude.toString());
+        userLocation.setCoordinates(position.coords.latitude, position.coords.longitude);
+        googleMapsAPI.geocode( userLocation.latitude.toString()+","+userLocation.longitude.toString() );
       },
       function failure(PositionError) {
         ui.setSearchText("Geolocation prevented.");
+        ui.$button_geolocateUser.hide();
+        ui.disableGeolocatingIcon();
         console.error("Native geolocation error: " + PositionError.message);
-      }, { // Options
+      }, 
+      { // Options
         timeout: 10000, // 10 seconds
         maximumAge: 60000 // 1 minute
       }
@@ -27,44 +29,39 @@ const session = { //Complete
 
 
 
-
-
 //Entry Point Function
 $(function entryPoint() {
-  startup();
-  configureInitialEventListeners();
-});
-
-function startup() {
   if (sessionFlags.deviceHasNativeGeolocation == false) {
-    console.warn("User can not geolocate natively. Hiding button.");
+    console.warn("User can not geolocate natively. Hiding Geolocate User button in the search view.");
     ui.$button_geolocateUser.hide();
   }
   ui.$activeView = ui.$view_welcome;
-  googleMapsAPI.setupMap();
-}
+  googleMapsAPI.initializeVenueMap();
+  configureInitialEventListeners();
+});
 
 function configureInitialEventListeners() {
-  //Welcome View, Let's Get Started button
+  //Welcome View Button
   ui.$button_letsGetStarted.on("click", function () {
     ui.moveToSearchView();
   });
 
-  //Search View, Geolocate User button
+  //Search View, Geolocate User Button
   ui.$button_geolocateUser.on("click", function () {
-    session.nativelyGeolocate();
+    userLocation.nativelyGeolocate();
   });
 
-  //Search View, Submit Search button
+  //Search View, Submit Search Button
   ui.$button_submitSearch.on("click", function () {
     ui.submitButtonClicked();
   });
 
-  //Venue Details View, Back button
+  //Venue Details View, Back To Results Button
   ui.$button_backToResults.on("click", function () {
     ui.moveToSearchView();
   });
 
+  //Venue Details View, See On Foursquare Button
   ui.$button_seeOnFoursquare.on("click", function (event) {
     window.open(ui.currentVenueFoursquareLink, "_blank");
   });

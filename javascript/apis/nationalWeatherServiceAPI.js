@@ -11,6 +11,7 @@ nationalWeatherServiceAPI = {
       .catch(this.getVenueTemperatureFailed);
   },
   getVenueTemperatureFailed: function (jqXHR) {
+    ui.$text_venueTemperature.html("Temperature data not available.");
     switch (jqXHR.status) {
       case 404:
         console.error("No temperature to fetch for provided latitude and longitude.");
