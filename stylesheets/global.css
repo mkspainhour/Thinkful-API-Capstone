@@ -148,7 +148,7 @@ button:hover {
   box-shadow: var(--shadow-dark);
 }
 
-#form-search {
+#js-form-search {
   position: relative;
   max-width: 500px;
   margin: 0 auto;
