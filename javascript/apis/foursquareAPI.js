@@ -76,6 +76,7 @@ const foursquareAPI = {
       newVenue.address[1] = item.venue.location.formattedAddress[1];
       return newVenue;
     });
+    ui.enableClearSearchTextButton();
     ui.renderVenues(foursquareAPI.fetchedVenues);
   },
 

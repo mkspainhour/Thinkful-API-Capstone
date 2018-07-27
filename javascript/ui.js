@@ -17,6 +17,7 @@ const ui = {
   $button_geolocateUser: $("#js-button-geolocate-user"),
   $input_search: $("#js-input-search"),
   $button_clearSearchText: $("#js-button-clear-search-text"),
+  $text_searchMessage: $("#js-text-search-message"),
   $button_submitSearch: $("#js-button-submit-search"),
   $wrapper_searchResults: $("#js-wrapper-search-results"),
 
@@ -69,6 +70,23 @@ const ui = {
 
   disableGeolocatingIcon: function() {
     this.$button_geolocateUser.children("img").attr("src", "resources/icons/geolocateUser.svg");
+  },
+
+  enableClearSearchTextButton: function() {
+    ui.$button_submitSearch.css("width", "36px");
+    ui.$button_submitSearch.css("right", "6px");
+    ui.$input_search.css("padding-right", "86px");
+    //ui.$input_search.css("padding-right", "") TODO
+    ui.$button_clearSearchText.show();
+    ui.$input_search.focus();
+  },
+
+  disableClearSearchTextButton: function() {
+    ui.$button_submitSearch.css("width", "48px");
+    ui.$button_submitSearch.css("right", "0");
+    ui.$input_search.css("padding-right", "40px");
+    //ui.$input_search.css("padding-right", "") TODO
+    ui.$button_clearSearchText.hide();
   },
 
   submitButtonClicked: function () {

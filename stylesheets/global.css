@@ -130,7 +130,6 @@ button:hover {
 
 .icon-button {
   width: 48px;
-  min-width: 48px;
   height: 48px;
   min-height: 48px;
 }
@@ -164,6 +163,7 @@ button:hover {
 }
 
 #js-button-geolocate-user {
+  min-width: 48px;
   margin-right: calc( var(--spacing-unit)/2);
 }
 
@@ -186,10 +186,11 @@ button:hover {
 
 #js-button-clear-search-text {
   position: absolute;
-  right: calc(0px + 48px);
+  right: 42px;
   z-index: 1;
   background-color: hsla(0, 0%, 100%, 0);
   box-shadow: none;
+  width: 36px;
 }
 #js-button-clear-search-text > img {
   position: relative;
@@ -202,6 +203,7 @@ button:hover {
   z-index: 1;
   background-color: hsla(0, 0%, 100%, 0);
   box-shadow: none;
+  width: 48px;
 }
 #js-button-submit-search > img {
   position: relative;
@@ -242,6 +244,14 @@ button:hover {
   margin-bottom: var(--spacing-unit);
   width: 100%;
   max-width: 400px;
+}
+
+#js-search-message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -55%);
+  width: calc(100vw - var(--spacing-unit));
 }
 
 .search-result {

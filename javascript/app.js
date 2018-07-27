@@ -37,8 +37,9 @@ $(function entryPoint() {
   }
   ui.$activeView = ui.$view_welcome;
   googleMapsAPI.initializeVenueMap();
-  ui.$button_clearSearchText.hide();
+  ui.disableClearSearchTextButton();
   ui.$wrapper_searchResults.hide(); //So that they can be faded in once fetched
+  ui.$text_searchMessage.hide(); //Only visible when there's something to communicate
   configureInitialEventListeners();
 });
 
@@ -49,6 +50,7 @@ function configureInitialEventListeners() {
   });
   //Search View, Geolocate User Button
   ui.$button_geolocateUser.on("click", function () {
+    ui.disableClearSearchTextButton();
     userLocation.nativelyGeolocate();
   });
   //Search View, Search Form
@@ -57,17 +59,18 @@ function configureInitialEventListeners() {
     ui.submitButtonClicked();
   });
   //Search View, Search Field
-  ui.$input_search.on("input", function() {
+  ui.$input_search.on("input", function(event) {
     if(ui.$button_clearSearchText.css("display", "none")) {
-      ui.$input_search.css("padding-right", "96px");
-      ui.$button_clearSearchText.show();
+      ui.enableClearSearchTextButton();
+    }
+    if(ui.$input_search.val() == "") {
+      ui.disableClearSearchTextButton();
     }
   });
   //Search View, Clear Search Text Button
   ui.$button_clearSearchText.on("click", function() {
     ui.$input_search.val("");
-    ui.$button_clearSearchText.hide();
-    ui.$input_search.css("padding-right", "48px");
+    ui.disableClearSearchTextButton();
   });
   //Search View, Submit Search Button
   ui.$button_submitSearch.on("submit", function (event) {
