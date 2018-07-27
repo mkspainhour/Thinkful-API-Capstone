@@ -13,6 +13,7 @@ const ui = {
 
   //Search View component pointers
   $view_search: $("#js-view-search"),
+  $form_search: $("#js-form-search"),
   $button_geolocateUser: $("#js-button-geolocate-user"),
   $input_search: $("#js-input-search"),
   $button_submitSearch: $("#js-button-submit-search"),

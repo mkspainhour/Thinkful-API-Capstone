@@ -52,6 +52,12 @@ function configureInitialEventListeners() {
     userLocation.nativelyGeolocate();
   });
 
+  //Searc View, Submit Text Field
+  ui.$input_search.on("submit", function(event) {
+    event.preventDefault();
+    ui.submitButtonClicked();
+  });
+
   //Search View, Submit Search Button
   ui.$button_submitSearch.on("click", function () {
     ui.submitButtonClicked();
