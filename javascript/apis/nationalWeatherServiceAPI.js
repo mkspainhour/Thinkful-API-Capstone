@@ -1,14 +1,19 @@
 nationalWeatherServiceAPI = {
   getVenueTemperature: function (venue) {
-    $.ajax({
-        dataType: "json",
-        url: `https://api.weather.gov/points/${venue.latitude},${venue.longitude}/forecast/hourly`,
-        //The index of the Venue object in the foursquareAPI.fetchedVenues array that is receiving temperature data
-        venueTargetIndex: foursquareAPI.fetchedVenues.indexOf(venue)
-        //Passed through here so that the getVenueTemperatureSucceeded() method can utilize it
-      })
-      .then(this.getVenueTemperatureSucceeded)
-      .catch(this.getVenueTemperatureFailed);
+    if (!venue.temperature) {
+      $.ajax({
+          dataType: "json",
+          url: `https://api.weather.gov/points/${venue.latitude},${venue.longitude}/forecast/hourly`,
+          //The index of the Venue object in the foursquareAPI.fetchedVenues array that is receiving temperature data
+          venueTargetIndex: foursquareAPI.fetchedVenues.indexOf(venue)
+          //Passed through here so that the getVenueTemperatureSucceeded() method can utilize it
+        })
+        .then(this.getVenueTemperatureSucceeded)
+        .catch(this.getVenueTemperatureFailed);
+    }
+    else {
+      console.warn("Duplicate nationalWeatherServiceAPI.getVenueTemperature(venue) call circumvented.");
+    }
   },
   getVenueTemperatureFailed: function (jqXHR) {
     ui.$text_venueTemperature.html("Temperature data not available.");
