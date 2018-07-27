@@ -7,7 +7,7 @@ html {
   --color-background: white;
   --shadow-main: 0 1px 2px hsla(235, 80%, 52%, 0.30), 0 1px 3px hsla(235, 80%, 52%, 0.15);
   --shadow-dark: 0 1px 2px hsla(235, 75%, 17%, 0.20), 0 1px 3px hsla(235, 75%, 17%, 0.10);
-  --spacing-unit: calc(8px + 5vmin);
+  --spacing-unit: calc(4px + 4vmin);
 }
 
 body {
