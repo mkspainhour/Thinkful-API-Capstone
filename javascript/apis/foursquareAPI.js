@@ -52,10 +52,10 @@ const foursquareAPI = {
     let errorCode = jqXHR.responseJSON.meta.code;
     switch (errorCode) {
       case 400:
-        console.error("foursquareAPI.getRecommendationsAround(latitude, longitude) failed due to a malformed or missing $.ajax() call parameter.")
+        alert("foursquareAPI.getRecommendationsAround(latitude, longitude) failed due to a malformed or missing $.ajax() call parameter.")
         break;
       case 500:
-        console.error("foursquareAPI.getRecommendationsAround(latitude, longitude) failed due to an internal Foursquare server error.");
+        alert("foursquareAPI.getRecommendationsAround(latitude, longitude) failed due to an internal Foursquare server error.");
         break;
     };
   },
@@ -63,6 +63,7 @@ const foursquareAPI = {
     console.log(`foursquareAPI.fetchRecommendationsAround(latitude, longitude) succeeded!`);
     if ("warning" in data.response) {
       console.warn(`However, there was a warning included: "${data.response.warning.text}"`);
+      ui.setSearchMessage(data.response.warning.text);
     }
 
     foursquareAPI.fetchedVenues = data.response.groups[0].items.map(function (item) {
@@ -108,13 +109,13 @@ const foursquareAPI = {
     let errorCode = jqXHR.responseJSON.meta.code;
     switch (errorCode) {
       case 400:
-        console.error("foursquareAPI.getVenueDetails(venue) failed due to a malformed or missing $.ajax() call parameter.")
+        alert("foursquareAPI.getVenueDetails(venue) failed due to a malformed or missing $.ajax() call parameter.")
         break;
       case 404:
-        console.error("Invalid venue passed to foursquareAPI.getVenueDetails(venue).");
+        alert("Invalid venue passed to foursquareAPI.getVenueDetails(venue).");
         break;
       case 500:
-        console.error("foursquareAPI.getVenueDetails(venue) failed due to an internal Foursquare server error.");
+        alert("foursquareAPI.getVenueDetails(venue) failed due to an internal Foursquare server error.");
         break;
     };
   },

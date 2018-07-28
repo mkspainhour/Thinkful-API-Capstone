@@ -101,6 +101,11 @@ const ui = {
     this.$input_search.val(newText);
   },
 
+  setSearchMessage: function (newMessage) {
+    ui.$text_searchMessage.show();
+    ui.$text_searchMessage.html(newMessage);
+  },
+
   renderVenues: function () {
     let constructedVenueElements = [];
     for (let i = 0; i < foursquareAPI.fetchedVenues.length; i++) {

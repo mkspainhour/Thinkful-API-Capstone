@@ -14,10 +14,24 @@ const userLocation = {
         googleMapsAPI.geocode( userLocation.latitude.toString()+","+userLocation.longitude.toString() );
       },
       function failure(PositionError) {
+
         ui.setSearchText("Geolocation prevented.");
-        ui.$button_geolocateUser.hide();
         ui.disableGeolocatingIcon();
-        console.error("Native geolocation error: " + PositionError.message);
+
+        switch(PositionError.code) {
+          case 3: //Timeout
+            alert("Geolocating you is taking longer than it should. Try again in a bit. The problem may have cleared itself up by then.");
+            console.error("Native geolocation timed out.");
+            break;
+          case 1: //Permission Denied
+            ui.$button_geolocateUser.hide();
+            ui.setSearchMessage("Unfortunately, denying permission to geolocate you disables the feature until the app is refreshed.");
+            break;
+          case 2: //Position Unavailable
+            alert("Something went wrong trying to geolocate you. Not sure what's going on, really.");
+            break;
+        }
+        //console.error("Native geolocation error: " + PositionError.message);
       }, 
       { // Options
         timeout: 10000, // 10 seconds
@@ -60,6 +74,7 @@ function configureInitialEventListeners() {
   });
   //Search View, Search Field
   ui.$input_search.on("input", function(event) {
+    ui.$text_searchMessage.hide();
     if(ui.$button_clearSearchText.css("display", "none")) {
       ui.enableClearSearchTextButton();
     }

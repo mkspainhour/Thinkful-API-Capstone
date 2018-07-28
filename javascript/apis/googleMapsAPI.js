@@ -59,23 +59,21 @@ googleMapsAPI = {
     switch (status) {
       case "ZERO_RESULTS":
         ui.setSearchText("Zero results.");
-        console.warn(`google.geocode() failed with status: "${status}".`);
+        ui.setSearchMessage("Couldn't find any results for that location.");
         break;
 
       case "OVER_QUERY_LIMIT":
       case "REQUEST_DENIED":
       case "INVALID_REQUEST":
-        console.error(`google.geocode() failed with status: "${status}".`);
+        alert(`google.geocode() failed with status: "${status}".`);
         break;
 
       case "UNKNOWN_ERROR":
-        ui.setSearchText("Google server error!");
-        console.error(`google.geocode() failed with status: "${status}".`);
+        alert(`Google server error! google.geocode() failed with status: "${status}".`);
         break;
 
       case "ERROR":
-        ui.setSearchText("Network error!");
-        console.error(`google.geocode() failed with status: "${status}".`);
+        alert(`Network error! google.geocode() failed with status: "${status}".`);
         break;
     }
   },
