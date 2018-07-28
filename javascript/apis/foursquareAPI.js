@@ -46,6 +46,7 @@ const foursquareAPI = {
     }
     else {
       console.warn("Duplicate foursquareAPI.fetchRecommendationsAround(latitude, longitude) call circumvented.");
+      ui.disableGeolocatingIcon();
     }
   },
   recommendationFetchFailed: function (jqXHR) {

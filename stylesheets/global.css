@@ -149,7 +149,7 @@ button:hover {
 
 #js-form-search {
   position: relative;
-  max-width: 500px;
+  max-width: 534px;
   margin: 0 auto;
   display: flex;
   flex-flow: row nowrap;
@@ -237,9 +237,8 @@ button:hover {
 /*#region => View / Search */
 #js-wrapper-search-results {
   position: relative;
-  top: calc(var(--spacing-unit) + 48px + 2px);
+  top: calc(var(--spacing-unit)*2 + 48px + 2px);
   /* Accounts for edge margins, search bar height, and top 2 pixels of box-shadow on the first .card .search-result. */
-  bottom: var(--spacing-unit);
   margin-top: var(--spacing-unit);
   margin-bottom: var(--spacing-unit);
   width: 100%;
@@ -265,7 +264,7 @@ button:hover {
   padding-right: 41px;
   background-color: var(--color-main);
   box-shadow: var(--shadow-main);
-  margin: calc( var(--spacing-unit)/2) 0;
+  margin: var(--spacing-unit) 0;
   cursor: pointer;
 }
 
