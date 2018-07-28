@@ -111,7 +111,7 @@ const ui = {
     for (let i = 0; i < foursquareAPI.fetchedVenues.length; i++) {
       let currentVenueElement =
         `<div id="${i}" class="search-result card">
-        <p class="typography-overline left-align light">${foursquareAPI.fetchedVenues[i].category}</p>
+        <h2 class="typography-overline left-align light">${foursquareAPI.fetchedVenues[i].category}</h2>
         <p class="typography-compact left-align light">${foursquareAPI.fetchedVenues[i].name}</p>
         <img src="resources/icons/chevron.svg" class="svg-search-result-chevron" alt="More venue detail...">
       </div>`;
