@@ -63,7 +63,7 @@ const foursquareAPI = {
     console.log(`foursquareAPI.fetchRecommendationsAround(latitude, longitude) succeeded!`);
     if ("warning" in data.response) {
       console.warn(`However, there was a warning included: "${data.response.warning.text}"`);
-      ui.setSearchMessage(data.response.warning.text);
+      ui.setSearchMessage("Couldn't find any results for that. Maybe too broad or too specific? I work best when you give me the name of a city.");
     }
 
     foursquareAPI.fetchedVenues = data.response.groups[0].items.map(function (item) {
