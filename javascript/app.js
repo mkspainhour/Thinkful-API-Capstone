@@ -85,6 +85,7 @@ function configureInitialEventListeners() {
   //Search View, Clear Search Text Button
   ui.$button_clearSearchText.on("click", function() {
     ui.$input_search.val("");
+    ui.$text_searchMessage.hide();
     ui.disableClearSearchTextButton();
   });
   //Search View, Submit Search Button
