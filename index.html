@@ -33,7 +33,7 @@
 
 			<div id="wrapper-welcome-body">
 				<div id="card-welcome-message" class="card">
-					<p id="welcome-message">Not sure what venues are popular around you? Headed somewhere and aren’t sure what you'll do when you get there?</p>
+					<p id="welcome-message">Not sure what's popular around you? Headed somewhere new and aren’t sure what you'll do when you get there?</p>
 				</div>
 				<button type="button" class="text-button" id="js-button-lets-get-started">Let's Get Started</button>
 				<p id="welcome-credit" class="typography-credit" aria-label="author credits">Designed & Developed by Marshall Spainhour</p>
@@ -67,9 +67,9 @@
 				</form>
 			</header>
 
-			<p id="js-text-search-message">This is a test message to see how this renders, and if it renders properly at all. Okay, thank you for your time.</p>
+			<p id="js-text-search-message" aria-live="polite">This is a test message to see how this renders, and if it renders properly at all. Okay, thank you for your time.</p>
 
-			<div id="js-wrapper-search-results" aria-live="assertive">
+			<div id="js-wrapper-search-results" aria-live="polite">
 				<!--Results rendered here...-->
 			</div>
 		</section>
@@ -84,7 +84,7 @@
 
 				<div class="wrapper-detail">
 					<h2 id="js-text-venue-type" class="typography-overline">Venue Type</h2>
-					<p id="js-text-venue-name">Venue Name</p>
+					<p class="typography-venue-title" id="js-text-venue-name">Venue Name</p>
 				</div>
 
 				<div id="js-wrapper-venue-price" class="wrapper-detail">

@@ -5,7 +5,7 @@ const ui = {
   currentVenueFoursquareLink: null,
 
   //Value Containers
-  fadeDuration: 250,
+  fadeDuration: 350,
 
   //Welcome View component pointers
   $view_welcome: $("#js-view-welcome"),

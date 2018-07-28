@@ -61,6 +61,11 @@ main {
   text-shadow: var(--shadow-main);
 }
 
+.typography-venue-title {
+  font-size: 24px;
+  line-height: 28px;
+}
+
 .typography-overline {
   opacity: 0.6;
   font-size: 10px;
@@ -137,6 +142,10 @@ button:hover {
 
 
 /*#region => Component / Search Form */
+#js-view-search {
+  position: relative;
+  top: calc( var(--spacing-unit)*2 + 48px);
+}
 #header-search {
   background-color: hsla(235, 40%, 99%, 99);
   width: 100%;
@@ -237,8 +246,6 @@ button:hover {
 /*#region => View / Search */
 #js-wrapper-search-results {
   position: relative;
-  top: calc(var(--spacing-unit)*2 + 48px + 2px);
-  /* Accounts for edge margins, search bar height, and top 2 pixels of box-shadow on the first .card .search-result. */
   margin-top: var(--spacing-unit);
   margin-bottom: var(--spacing-unit);
   width: 100%;
@@ -272,10 +279,6 @@ button:hover {
   margin-top: 0;
 }
 
-.search-result:last-of-type {
-  margin-bottom: 0;
-}
-
 .svg-search-result-chevron {
   position: absolute;
   top: 50%;
@@ -303,6 +306,7 @@ button:hover {
   position: relative;
   top: -16px;
   left: -16px;
+  margin-bottom: var(--spacing-unit);
 }
 
 #js-text-venue-website {
@@ -319,7 +323,7 @@ button:hover {
 }
 
 #js-button-see-on-foursquare {
-  margin-top: var(--spacing-unit);
+  margin-top: calc( var(--spacing-unit)*2 );
   background-color: var(--color-light);
   color: var(--color-main);
   box-shadow: var(--shadow-dark);
@@ -332,7 +336,10 @@ button:hover {
 }
 
 .wrapper-detail {
-  margin-top: 24px;
+  margin-bottom: var(--spacing-unit);
+}
+.wrapper-detail:last-of-type() {
+  margin-bottom: 0;
 }
 /*#endregion  ==> View / Venue Details */
 

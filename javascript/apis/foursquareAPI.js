@@ -34,7 +34,7 @@ const foursquareAPI = {
         data: {
           ll: `${latitude},${longitude}`,
           radius: 10000, //meters
-          limit: 50, //results
+          limit: 30, //results
           openNow: true,
           client_id: "JVNYUDCL0XHG00XHJPAIXW5G3GWPMCMWERUU2THM2KXHLSOG",
           client_secret: "4ZC4TTXFAZM5QVC1SS2MQLYTR50R0A2OAOVPLN1UR5GIHSQB",
