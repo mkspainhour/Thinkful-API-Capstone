@@ -58,7 +58,6 @@ googleMapsAPI = {
   conversionFailed: function (status) {
     switch (status) {
       case "ZERO_RESULTS":
-        ui.setSearchText("Zero results.");
         ui.setSearchMessage("Couldn't find any results for that location.");
         break;
 
