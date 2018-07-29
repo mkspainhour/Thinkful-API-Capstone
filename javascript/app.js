@@ -75,7 +75,7 @@ function configureInitialEventListeners() {
     ui.submitButtonClicked();
   });
   //Search View, Search Field
-  ui.$input_search.on("input", function(event) {
+  ui.$input_search.on("input", function() {
     ui.$text_searchMessage.hide();
     if(ui.$button_clearSearchText.css("display", "none")) {
       ui.enableClearSearchTextButton();
@@ -95,7 +95,7 @@ function configureInitialEventListeners() {
     ui.moveToSearchView();
   });
   //Venue Details View, See On Foursquare Button
-  ui.$button_seeOnFoursquare.on("click", function (event) {
+  ui.$button_seeOnFoursquare.on("click", function () {
     window.open(ui.currentVenueFoursquareLink, "_blank");
   });
 }
