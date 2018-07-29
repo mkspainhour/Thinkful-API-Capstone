@@ -5,7 +5,7 @@ const ui = {
   currentVenueFoursquareLink: null,
 
   //Value Containers
-  fadeDuration: 350,
+  fadeDuration: 375,
 
   //Welcome View component pointers
   $view_welcome: $("#js-view-welcome"),
@@ -54,6 +54,18 @@ const ui = {
     });
   },
 
+  enableSearchFormInput: function () {
+    ui.$input_search.prop("disabled", false);
+    ui.$button_clearSearchText.prop("disabled", false);
+    ui.$button_submitSearch.prop("disabled", false);
+  },
+
+  disableSearchFormInput: function () {
+    ui.$input_search.prop("disabled", true);
+    ui.$button_clearSearchText.prop("disabled", true);
+    ui.$button_submitSearch.prop("disabled", true);
+  },
+
   moveToDetailsView: function (venue) {
     ui.searchResultsScrollPosition = window.scrollY;
     this.$activeView.fadeOut(this.fadeDuration, () => {
@@ -93,6 +105,7 @@ const ui = {
     let searchTerms = this.$input_search.val();
     //The search terms must not be blank and must include at least a character or digit
     if (searchTerms.length > 0 && searchTerms.match(/[\w\d]/g) && googleMapsAPI.previousSearchTerms != searchTerms) {
+      ui.disableSearchFormInput();
       googleMapsAPI.geocode(searchTerms);
     }
   },
@@ -104,6 +117,13 @@ const ui = {
   setSearchMessage: function (newMessage) {
     ui.$text_searchMessage.show();
     ui.$text_searchMessage.html(newMessage);
+    this.scrollToTop();
+  },
+
+  scrollToTop: function () {
+    $("html").animate({
+      scrollTop: 0
+    }, 1000);
   },
 
   renderVenues: function () {
@@ -151,7 +171,7 @@ const ui = {
     }
 
     if (venue.rating) {
-      this.$text_venueRating.html(venue.rating + "/10 from " + venue.votes + " ratings");
+      this.$text_venueRating.html("Rated " + venue.rating + "/10 from " + venue.votes + " opinions");
       this.$wrapper_venueRating.show();
     } else {
       this.$wrapper_venueRating.hide();

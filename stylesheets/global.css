@@ -2,6 +2,7 @@ html {
   --fonts: "Rubik", "SF UI Text", "Helvetica Neue", "Helvetica", sans-serif;
   --color-main: hsl(235, 80%, 52%);
   --color-dark: #0B114D;
+  --color-disabled-text: #8588A6;
   --color-light: white;
   --color-interactible-background: var(--color-main);
   --color-background: white;
@@ -68,7 +69,7 @@ main {
 
 .typography-overline {
   opacity: 0.6;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 1.5px;
   line-height: 12px;
   font-weight: 400;
@@ -144,7 +145,7 @@ button:hover {
 /*#region => Component / Search Form */
 #js-view-search {
   position: relative;
-  top: calc( var(--spacing-unit)*2 + 48px);
+  top: calc( var(--spacing-unit)*2 + 80px);
 }
 #header-search {
   background-color: hsla(235, 40%, 99%, 99);
@@ -175,6 +176,9 @@ button:hover {
   min-width: 48px;
   margin-right: calc( var(--spacing-unit)/2);
 }
+#js-button-geolocate-user:disabled {
+  opacity: 0.5;
+}
 
 #js-input-search {
   height: 48px;
@@ -192,6 +196,9 @@ button:hover {
   appearance: none;
   -moz-appearance: none;
 }
+#js-input-search:disabled {
+  color: var(--color-disabled-text);
+}
 
 #js-button-clear-search-text {
   position: absolute;
@@ -200,6 +207,9 @@ button:hover {
   background-color: hsla(0, 0%, 100%, 0);
   box-shadow: none;
   width: 36px;
+}
+#js-button-clear-search-text:disabled {
+  opacity: 0.5;
 }
 #js-button-clear-search-text > img {
   position: relative;
@@ -213,6 +223,9 @@ button:hover {
   background-color: hsla(0, 0%, 100%, 0);
   box-shadow: none;
   width: 48px;
+}
+#js-button-submit-search:disabled {
+  opacity: 0.5;
 }
 #js-button-submit-search > img {
   position: relative;
@@ -247,17 +260,19 @@ button:hover {
 #js-wrapper-search-results {
   position: relative;
   margin-top: var(--spacing-unit);
-  margin-bottom: var(--spacing-unit);
   width: 100%;
   max-width: 400px;
 }
 
-#js-search-message {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -55%);
-  width: calc(100vw - var(--spacing-unit));
+#search-app-title {
+  font-size: 32px;
+  line-height: 32px;
+  margin-top: 0;
+  margin-bottom: var(--spacing-unit);
+}
+
+#js-text-search-message {
+  margin-top: var(--spacing-unit);
 }
 
 .search-result {
@@ -277,6 +292,9 @@ button:hover {
 
 .search-result:first-of-type {
   margin-top: 0;
+}
+.search-result:last-of-type {
+  margin-bottom: 0;
 }
 
 .svg-search-result-chevron {

@@ -27,6 +27,6 @@ nationalWeatherServiceAPI = {
   getVenueTemperatureSucceeded: function (data) {
     console.log("nationalWeatherServiceAPI.getTemperature(latitude, longitude) succeeded!");
     foursquareAPI.fetchedVenues[this.venueTargetIndex].temperature = data.properties.periods[0].temperature;
-    ui.$text_venueTemperature.html(data.properties.periods[0].temperature);
+    ui.$text_venueTemperature.html(data.properties.periods[0].temperature + " ℉");
   }
 };

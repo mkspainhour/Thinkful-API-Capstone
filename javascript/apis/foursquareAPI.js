@@ -64,7 +64,7 @@ const foursquareAPI = {
     console.log(`foursquareAPI.fetchRecommendationsAround(latitude, longitude) succeeded!`);
     if ("warning" in data.response) {
       console.warn(`However, there was a warning included: "${data.response.warning.text}"`);
-      ui.setSearchMessage("Couldn't find any results for that. Maybe too broad or too specific? I work best when you give me the name of a city.");
+      ui.setSearchMessage("Couldn't find anything with that. I work best if you give me the name of a city.");
     }
 
     foursquareAPI.fetchedVenues = data.response.groups[0].items.map(function (item) {
@@ -79,6 +79,8 @@ const foursquareAPI = {
       return newVenue;
     });
     ui.enableClearSearchTextButton();
+    ui.enableSearchFormInput();
+    ui.$button_geolocateUser.prop("disabled", false);
     ui.renderVenues(foursquareAPI.fetchedVenues);
   },
 

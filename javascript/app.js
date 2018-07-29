@@ -6,6 +6,7 @@ const userLocation = {
     this.longitude = newLongitude;
   },
   nativelyGeolocate: function () {
+    ui.disableSearchFormInput();
     ui.setSearchText("Locating...");
     ui.enableGeolocatingIcon();
     navigator.geolocation.getCurrentPosition(
@@ -70,6 +71,7 @@ function configureInitialEventListeners() {
   //Search View, Search Form
   ui.$form_search.on("submit", function(event) {
     event.preventDefault(); //To prevent the dreaded page refresh problem
+    ui.$button_geolocateUser.prop("disabled", true);
     ui.submitButtonClicked();
   });
   //Search View, Search Field
@@ -87,11 +89,6 @@ function configureInitialEventListeners() {
     ui.$input_search.val("");
     ui.$text_searchMessage.hide();
     ui.disableClearSearchTextButton();
-  });
-  //Search View, Submit Search Button
-  ui.$button_submitSearch.on("submit", function (event) {
-    event.preventDefault();
-    ui.submitButtonClicked();
   });
   //Venue Details View, Back To Results Button
   ui.$button_backToResults.on("click", function () {
