@@ -354,7 +354,7 @@ button:hover {
 }
 
 .wrapper-detail {
-  margin-bottom: var(--spacing-unit);
+  margin-bottom: calc( var(--spacing-unit)*1.5);
 }
 .wrapper-detail:last-of-type() {
   margin-bottom: 0;
