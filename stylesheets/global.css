@@ -379,7 +379,7 @@ button:hover {
 }
 
 #js-button-see-on-foursquare {
-  margin-top: calc( var(--spacing-unit)*2 );
+  margin-top: var(--spacing-unit);
   background-color: var(--color-light);
   color: var(--color-main);
   box-shadow: var(--shadow-dark);
