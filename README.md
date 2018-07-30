@@ -10,6 +10,6 @@ WHERE achieves this by using the Foursquare API for venue recommendations, Googl
 
 ## Goals
 - Minimal, spacious design that draws the users eye immediately to significant details and does not needlessly distract.
-- UI components that clearly communicate their state and behavior
-- Iconography that requires as little processing as possible to interpret
-- Typography whose visual character aligns itself with the design tone and goals of the application
+- UI components that clearly communicate their state and behavior.
+- Iconography that requires as little processing as possible to interpret.
+- Typography whose visual character aligns itself with the design tone and goals of the application.
