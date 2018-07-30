@@ -1,4 +1,5 @@
-googleMapsAPI = {
+
+googleMaps = {
   activeMarker: null,
   map: null,
   initializeVenueMap: function () {
@@ -36,7 +37,6 @@ googleMapsAPI = {
   },
 
   geocoder: new google.maps.Geocoder(),
-  
   previousSearchTerms: null,
   geocode: function (searchTerms) {
     this.convert(searchTerms)
@@ -45,20 +45,18 @@ googleMapsAPI = {
   },
   convert: function (searchTerms) {
     return new Promise((resolve, reject) => {
-
-      this.geocoder.geocode({
-          "address": searchTerms
-        },
+      this.geocoder.geocode({"address": searchTerms},
         function (results, status) {
           status === "OK" ? resolve(results) : reject(status);
         });
-
     });
   },
   conversionFailed: function (status) {
     switch (status) {
       case "ZERO_RESULTS":
-        ui.setSearchMessage("Couldn't find any results for that location.");
+        ui.searchFeedback("Couldn't find any results for that location.");
+        ui.enableGeolocationButton();
+        ui.enableSearchField();
         break;
 
       case "OVER_QUERY_LIMIT":
@@ -77,10 +75,10 @@ googleMapsAPI = {
     }
   },
   conversionSucceeded: function (results) {
-    console.log(`googleMapsAPI.geocode(searchTerms) succeeded!`);
-    googleMapsAPI.previousSearchTerms = results[0].formatted_address;
+    console.log(`googleMaps.geocode(searchTerms) succeeded!`);
+    googleMaps.previousSearchTerms = results[0].formatted_address;
     userLocation.setCoordinates(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-    ui.setSearchText( results[0].formatted_address );
-    foursquareAPI.fetchRecommendationsAround(userLocation.latitude, userLocation.longitude);
+    ui.setSearchFieldText( results[0].formatted_address );
+    foursquare.fetchRecommendationsAround(userLocation.latitude, userLocation.longitude);
   },
 };

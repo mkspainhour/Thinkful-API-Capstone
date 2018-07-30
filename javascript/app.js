@@ -6,18 +6,19 @@ const userLocation = {
     this.longitude = newLongitude;
   },
   nativelyGeolocate: function () {
-    ui.disableSearchFormInput();
-    ui.setSearchText("Locating...");
-    ui.enableGeolocatingIcon();
+    ui.enableGeolocatingButtonAnimation();
+    ui.disableSearchField();
+    ui.setSearchFieldText("Locating...");
     navigator.geolocation.getCurrentPosition(
       function success(foundPosition) {
         userLocation.setCoordinates(foundPosition.coords.latitude, foundPosition.coords.longitude);
-        googleMapsAPI.geocode( userLocation.latitude.toString()+","+userLocation.longitude.toString() );
+        googleMaps.geocode( userLocation.latitude.toString()+","+userLocation.longitude.toString() );
       },
       function failure(PositionError) {
 
-        ui.setSearchText("Geolocation prevented.");
-        ui.disableGeolocatingIcon();
+        ui.setSearchFieldText("Geolocation prevented.");
+        ui.disableGeolocatingButtonAnimation();
+        ui.enableSearchField();
 
         switch(PositionError.code) {
           case 3: //Timeout
@@ -26,7 +27,7 @@ const userLocation = {
             break;
           case 1: //Permission Denied
             ui.$button_geolocateUser.hide();
-            ui.setSearchMessage("Unfortunately, denying permission to geolocate you disables the feature until the app is refreshed.");
+            ui.searchFeedback("Unfortunately, denying permission to geolocate disables the feature until the app is refreshed.");
             break;
           case 2: //Position Unavailable
             alert("Something went wrong trying to geolocate you. Not sure what's going on, really.");
@@ -35,7 +36,7 @@ const userLocation = {
         //console.error("Native geolocation error: " + PositionError.message);
       }, 
       { // Options
-        timeout: 10000, // 10 seconds
+        timeout: 15000, // 15 seconds
         maximumAge: 60000 // 1 minute
       }
     );
@@ -51,7 +52,7 @@ $(function entryPoint() {
     ui.$button_geolocateUser.hide();
   }
   ui.$activeView = ui.$view_welcome;
-  googleMapsAPI.initializeVenueMap();
+  googleMaps.initializeVenueMap();
   ui.disableClearSearchTextButton();
   ui.$wrapper_searchResults.hide(); //So that they can be faded in once fetched
   ui.$text_searchMessage.hide(); //Only visible when there's something to communicate
@@ -65,14 +66,24 @@ function configureInitialEventListeners() {
   });
   //Search View, Geolocate User Button
   ui.$button_geolocateUser.on("click", function () {
+    ui.$button_geolocateUser.blur();
     ui.disableClearSearchTextButton();
     userLocation.nativelyGeolocate();
   });
   //Search View, Search Form
   ui.$form_search.on("submit", function(event) {
     event.preventDefault(); //To prevent the dreaded page refresh problem
-    ui.$button_geolocateUser.prop("disabled", true);
-    ui.submitButtonClicked();
+    ui.disableGeolocationButton();
+    ui.disableSearchField();
+    let searchTerms = ui.$input_search.val();
+    //The search terms must not be blank and must include at least a character or digit
+    if (searchTerms.length > 0 && searchTerms.match(/[\w\d]/g) && googleMaps.previousSearchTerms != searchTerms) {
+      googleMaps.geocode(searchTerms);
+    }
+    else {
+      ui.enableGeolocationButton();
+      ui.enableSearchField();
+    }
   });
   //Search View, Search Field
   ui.$input_search.on("input", function() {

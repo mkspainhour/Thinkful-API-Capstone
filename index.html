@@ -10,7 +10,7 @@
 	<meta name="author" content="Marshall Spainhour">
 	<!--STYLESHEETS-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:100,200,300,400,500,600,700,800,900">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:400,900i">
 	<link rel="stylesheet" href="stylesheets/resets.css">
 	<link rel="stylesheet" href="stylesheets/global.css">
 	<!--FAVICONS-->
@@ -57,12 +57,12 @@
 					<input type="text" id="js-input-search" placeholder="City name..." title="Enter and submit a location to search for nearby activities."
 					  aria-label="text field for search terms" required autofocus>
 
-					<button type="button" class="icon-button" for="form-search" id="js-button-clear-search-text" title="Clear all text from the text field."
+					<button type="button" class="icon-button" for="js-form-search" id="js-button-clear-search-text" title="Clear all text from the text field."
 					  aria-label="clear search field">
 						<img src="resources/icons/clearText.svg" alt="Clear Text">
 					</button>
 					
-					<button type="submit" class="icon-button" for="form-search" id="js-button-submit-search" title="Search for location entered in the text field."
+					<button type="submit" class="icon-button" for="js-form-search" id="js-button-submit-search" title="Search for location entered in the text field."
 					  aria-label="submit search button">
 						<img src="resources/icons/search.svg" alt="Submit Search">
 					</button>
@@ -83,11 +83,11 @@
 				<img src="resources/icons/back.svg" alt="Back">
 			</button>
 
-			<div id="wrapper-venue-details" class="left-align light">
+			<div id="wrapper-venue-details" class="light">
 
 				<div class="wrapper-detail">
 					<h2 id="js-text-venue-type" class="typography-overline">Venue Type</h2>
-					<p class="typography-venue-title" id="js-text-venue-name">Venue Name</p>
+					<p class="typography-detail-venue-title" id="js-text-venue-name">Venue Name</p>
 				</div>
 
 				<div id="js-wrapper-venue-price" class="wrapper-detail">
@@ -124,8 +124,8 @@
 				</div>
 
 				<div id="js-wrapper-venue-temperature" class="wrapper-detail">
-					<h2 class="typography-overline left-align">Temperature</h2>
-					<p id="js-text-venue-temperature" class="left-align" aria-live="polite">Fetching...</p>
+					<h2 class="typography-overline">Temperature</h2>
+					<p id="js-text-venue-temperature" aria-live="polite">Fetching...</p>
 				</div>
 
 				<button type="button" class="text-button" id="js-button-see-on-foursquare" title="Get more details for this venue on Foursquare.com"
@@ -142,9 +142,9 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvZhOq7cVJIJh9rchv-Owdfkn97f75qGQ&libraries=places"></script>
 	<script src="javascript/sessionFlags.js"></script>
 	<script src="javascript/ui.js"></script>
-	<script src="javascript/apis/googleMapsAPI.js"></script>
-	<script src="javascript/apis/foursquareAPI.js"></script>
-	<script src="javascript/apis/nationalWeatherServiceAPI.js"></script>
+	<script src="javascript/apis/googleMaps.js"></script>
+	<script src="javascript/apis/foursquare.js"></script>
+	<script src="javascript/apis/nationalWeatherService.js"></script>
 	<script src="javascript/app.js"></script>
 	<!--#endregion -->
 </body>

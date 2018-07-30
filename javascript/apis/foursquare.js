@@ -18,7 +18,7 @@ class Venue { //TODO
   }
 }
 
-const foursquareAPI = {
+const foursquare = {
   previousFetchCoordinates: {
     latitude: null,
     longitude: null
@@ -45,29 +45,32 @@ const foursquareAPI = {
       .fail(this.recommendationFetchFailed);
     }
     else {
-      console.warn("Duplicate foursquareAPI.fetchRecommendationsAround(latitude, longitude) call circumvented.");
-      ui.disableGeolocatingIcon();
+      console.warn("Duplicate foursquare.fetchRecommendationsAround(latitude, longitude) call circumvented.");
+      ui.disableGeolocatingButtonAnimation();
+      ui.enableGeolocationButton();
+      ui.enableSearchField();
     }
   },
   recommendationFetchFailed: function (jqXHR) {
     let errorCode = jqXHR.responseJSON.meta.code;
     switch (errorCode) {
       case 400:
-        alert("foursquareAPI.getRecommendationsAround(latitude, longitude) failed due to a malformed or missing $.ajax() call parameter.")
+        alert("foursquare.getRecommendationsAround(latitude, longitude) failed due to a malformed or missing $.ajax() call parameter.")
         break;
       case 500:
-        alert("foursquareAPI.getRecommendationsAround(latitude, longitude) failed due to an internal Foursquare server error.");
+        alert("foursquare.getRecommendationsAround(latitude, longitude) failed due to an internal Foursquare server error.");
         break;
     };
+    ui.enableSearchField();
   },
   recommendationFetchSucceeded: function (data) {
-    console.log(`foursquareAPI.fetchRecommendationsAround(latitude, longitude) succeeded!`);
+    console.log(`foursquare.fetchRecommendationsAround(latitude, longitude) succeeded!`);
     if ("warning" in data.response) {
       console.warn(`However, there was a warning included: "${data.response.warning.text}"`);
-      ui.setSearchMessage("Couldn't find anything with that. I work best if you give me the name of a city.");
+      ui.searchFeedback("Couldn't find anything with that. I work best if you give me the name of a city.");
     }
 
-    foursquareAPI.fetchedVenues = data.response.groups[0].items.map(function (item) {
+    foursquare.fetchedVenues = data.response.groups[0].items.map(function (item) {
       let newVenue = new Venue();
       newVenue.id = item.venue.id;
       newVenue.name = item.venue.name;
@@ -78,10 +81,9 @@ const foursquareAPI = {
       newVenue.address[1] = item.venue.location.formattedAddress[1];
       return newVenue;
     });
-    ui.enableClearSearchTextButton();
-    ui.enableSearchFormInput();
-    ui.$button_geolocateUser.prop("disabled", false);
-    ui.renderVenues(foursquareAPI.fetchedVenues);
+    ui.enableGeolocationButton();
+    ui.enableSearchField();
+    ui.renderVenues(foursquare.fetchedVenues);
   },
 
   alreadyDetailedVenueIDs: [],
@@ -96,15 +98,15 @@ const foursquareAPI = {
           client_secret: "4ZC4TTXFAZM5QVC1SS2MQLYTR50R0A2OAOVPLN1UR5GIHSQB",
           v: "20180718"
         },
-        //The index of the Venue object in the foursquareAPI.fetchedVenues array that is receiving details
-        venueTargetIndex: foursquareAPI.fetchedVenues.indexOf(venue)
+        //The index of the Venue object in the foursquare.fetchedVenues array that is receiving details
+        venueTargetIndex: foursquare.fetchedVenues.indexOf(venue)
         //Passed through here so that the venueDetailsFetchSucceeded() method can utilize it
       })
       .then(this.venueDetailsFetchSucceeded)
       .catch(this.venueDetailsFetchFailed);
     }
     else {
-      console.warn("Duplicate foursquareAPI.getVenueDetails(venue) call circumvented.");
+      console.warn("Duplicate foursquare.getVenueDetails(venue) call circumvented.");
       ui.showVenueDetailsFor(venue);
     }
   },
@@ -112,41 +114,41 @@ const foursquareAPI = {
     let errorCode = jqXHR.responseJSON.meta.code;
     switch (errorCode) {
       case 400:
-        alert("foursquareAPI.getVenueDetails(venue) failed due to a malformed or missing $.ajax() call parameter.")
+        alert("foursquare.getVenueDetails(venue) failed due to a malformed or missing $.ajax() call parameter.")
         break;
       case 404:
-        alert("Invalid venue passed to foursquareAPI.getVenueDetails(venue).");
+        alert("Invalid venue passed to foursquare.getVenueDetails(venue).");
         break;
       case 500:
-        alert("foursquareAPI.getVenueDetails(venue) failed due to an internal Foursquare server error.");
+        alert("foursquare.getVenueDetails(venue) failed due to an internal Foursquare server error.");
         break;
     };
   },
   venueDetailsFetchSucceeded: function (data) {
-    console.log("foursquareAPI.getVenueDetails(venue) succeeded!");
+    console.log("foursquare.getVenueDetails(venue) succeeded!");
     let fetchedVenueDetails = data.response.venue;
 
     if ("price" in fetchedVenueDetails) {
-      foursquareAPI.fetchedVenues[this.venueTargetIndex].price = "$".repeat(fetchedVenueDetails.price.tier);
+      foursquare.fetchedVenues[this.venueTargetIndex].price = "$".repeat(fetchedVenueDetails.price.tier);
     }
     if ("hours" in fetchedVenueDetails) {
-      foursquareAPI.fetchedVenues[this.venueTargetIndex].hours = fetchedVenueDetails.hours.status;
+      foursquare.fetchedVenues[this.venueTargetIndex].hours = fetchedVenueDetails.hours.status;
     }
     if ("url" in fetchedVenueDetails) {
-      foursquareAPI.fetchedVenues[this.venueTargetIndex].website = fetchedVenueDetails.url;
+      foursquare.fetchedVenues[this.venueTargetIndex].website = fetchedVenueDetails.url;
     }
     if ("contact" in fetchedVenueDetails) {
-      foursquareAPI.fetchedVenues[this.venueTargetIndex].phoneNumber = fetchedVenueDetails.contact.formattedPhone;
+      foursquare.fetchedVenues[this.venueTargetIndex].phoneNumber = fetchedVenueDetails.contact.formattedPhone;
     }
     if ("rating" in fetchedVenueDetails) {
-      foursquareAPI.fetchedVenues[this.venueTargetIndex].rating = fetchedVenueDetails.rating;
+      foursquare.fetchedVenues[this.venueTargetIndex].rating = fetchedVenueDetails.rating;
     }
     if ("ratingSignals" in fetchedVenueDetails) {
-      foursquareAPI.fetchedVenues[this.venueTargetIndex].votes = fetchedVenueDetails.ratingSignals;
+      foursquare.fetchedVenues[this.venueTargetIndex].votes = fetchedVenueDetails.ratingSignals;
     }
     if ("canonicalUrl" in fetchedVenueDetails) {
-      foursquareAPI.fetchedVenues[this.venueTargetIndex].foursquareURL = fetchedVenueDetails.canonicalUrl;
+      foursquare.fetchedVenues[this.venueTargetIndex].foursquareURL = fetchedVenueDetails.canonicalUrl;
     }
-    ui.showVenueDetailsFor(foursquareAPI.fetchedVenues[this.venueTargetIndex]);
+    ui.showVenueDetailsFor(foursquare.fetchedVenues[this.venueTargetIndex]);
   }
 }

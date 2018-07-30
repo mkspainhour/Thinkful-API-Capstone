@@ -1,7 +1,7 @@
 const ui = {
   //State Variables
   $activeView: null,
-  searchResultsScrollPosition: null,
+  searchViewScrollPosition: null,
   currentVenueFoursquareLink: null,
 
   //Value Containers
@@ -46,49 +46,60 @@ const ui = {
   $button_seeOnFoursquare: $("#js-button-see-on-foursquare"),
 
   //UI Functions
-  moveToSearchView: function () {
-    this.$activeView.fadeOut(this.fadeDuration, () => {
+  moveToSearchView: function() {
+    this.$activeView.fadeOut( this.fadeDuration, () => {
       this.$activeView = this.$view_search;
       this.$activeView.fadeIn(this.fadeDuration);
-      window.scroll(0, ui.searchResultsScrollPosition);
+      window.scroll(0, this.searchViewScrollPosition);
     });
   },
 
-  enableSearchFormInput: function () {
-    ui.$input_search.prop("disabled", false);
-    ui.$button_clearSearchText.prop("disabled", false);
-    ui.$button_submitSearch.prop("disabled", false);
-  },
+  moveToDetailsViewFor: function(venue) {
 
-  disableSearchFormInput: function () {
-    ui.$input_search.prop("disabled", true);
-    ui.$button_clearSearchText.prop("disabled", true);
-    ui.$button_submitSearch.prop("disabled", true);
-  },
+    this.searchViewScrollPosition = window.scrollY;
 
-  moveToDetailsView: function (venue) {
-    ui.searchResultsScrollPosition = window.scrollY;
     this.$activeView.fadeOut(this.fadeDuration, () => {
       this.$activeView = this.$view_venueDetails;
       window.scroll(0, 0);
-      googleMapsAPI.setMapCenter(venue.latitude, venue.longitude);
+      googleMaps.setMapCenter(venue.latitude, venue.longitude); //Outbound
       this.$activeView.fadeIn(this.fadeDuration);
     });
   },
 
-  enableGeolocatingIcon: function () {
+  enableGeolocatingButtonAnimation: function () {
+    this.$button_geolocateUser.css("pointer-events", "none");
     this.$button_geolocateUser.children("img").attr("src", "resources/icons/locatingUser.svg");
   },
 
-  disableGeolocatingIcon: function() {
+  disableGeolocatingButtonAnimation: function() {
+    this.$button_geolocateUser.css("pointer-events", "auto");
     this.$button_geolocateUser.children("img").attr("src", "resources/icons/geolocateUser.svg");
+  },
+
+  enableGeolocationButton: function() {
+    this.$button_geolocateUser.prop("disabled", false);
+  },
+
+  disableGeolocationButton: function() {
+    this.$button_geolocateUser.prop("disabled", true);
+  },
+
+  enableSearchField: function() {
+    this.$input_search.prop("disabled", false);
+    this.$button_clearSearchText.prop("disabled", false);
+    this.$button_submitSearch.prop("disabled", false);
+  },
+
+  disableSearchField: function() {
+    this.$input_search.prop("disabled", true);
+    this.$button_clearSearchText.prop("disabled", true);
+    this.$button_submitSearch.prop("disabled", true);
   },
 
   enableClearSearchTextButton: function() {
     ui.$button_submitSearch.css("width", "36px");
     ui.$button_submitSearch.css("right", "6px");
     ui.$input_search.css("padding-right", "86px");
-    //ui.$input_search.css("padding-right", "") TODO
     ui.$button_clearSearchText.show();
     ui.$input_search.focus();
   },
@@ -97,58 +108,52 @@ const ui = {
     ui.$button_submitSearch.css("width", "48px");
     ui.$button_submitSearch.css("right", "0");
     ui.$input_search.css("padding-right", "40px");
-    //ui.$input_search.css("padding-right", "") TODO
     ui.$button_clearSearchText.hide();
+    ui.$input_search.focus();
   },
 
-  submitButtonClicked: function () {
-    let searchTerms = this.$input_search.val();
-    //The search terms must not be blank and must include at least a character or digit
-    if (searchTerms.length > 0 && searchTerms.match(/[\w\d]/g) && googleMapsAPI.previousSearchTerms != searchTerms) {
-      ui.disableSearchFormInput();
-      googleMapsAPI.geocode(searchTerms);
-    }
-  },
-
-  setSearchText: function (newText) {
+  setSearchFieldText: function(newText) {
     this.$input_search.val(newText);
+    this.$input_search.get(0).setSelectionRange(0, 0); //Sets the cursor to the beginning of the input to maximize legibility of new text content
   },
 
-  setSearchMessage: function (newMessage) {
+  searchFeedback: function(newMessage) {
     ui.$text_searchMessage.show();
     ui.$text_searchMessage.html(newMessage);
-    this.scrollToTop();
+    this.scrollToTopOfResults();
   },
 
-  scrollToTop: function () {
+  scrollToTopOfResults: function() {
     $("html").animate({
       scrollTop: 0
     }, 1000);
   },
 
-  renderVenues: function () {
+  renderVenues: function(venuesArray) {
     let constructedVenueElements = [];
-    for (let i = 0; i < foursquareAPI.fetchedVenues.length; i++) {
+    for (let i = 0; i < venuesArray.length; i++) {
       let currentVenueElement =
         `<div id="${i}" class="search-result card">
-        <h2 class="typography-overline left-align light">${foursquareAPI.fetchedVenues[i].category}</h2>
-        <p class="typography-compact left-align light">${foursquareAPI.fetchedVenues[i].name}</p>
+        <h2 class="typography-overline light">${venuesArray[i].category}</h2>
+        <p class="typography-compact light">${venuesArray[i].name}</p>
         <img src="resources/icons/chevron.svg" class="svg-search-result-chevron" alt="More venue detail...">
       </div>`;
       constructedVenueElements.push(currentVenueElement);
     }
     this.$wrapper_searchResults.html(constructedVenueElements);
     this.addSearchResultEventListeners();
-    this.disableGeolocatingIcon();
+    this.disableGeolocatingButtonAnimation();
+    ui.enableSearchField();
+    ui.enableClearSearchTextButton();
     this.$wrapper_searchResults.fadeIn(this.fadeDuration);
   },
 
   addSearchResultEventListeners: function () {
     $(".search-result").on("click", function (event) {
-      selectedVenue = foursquareAPI.fetchedVenues[event.currentTarget.id];
+      selectedVenue = foursquare.fetchedVenues[event.currentTarget.id];
       ui.$text_venueTemperature.html("Fetching...");
-      nationalWeatherServiceAPI.getVenueTemperature(selectedVenue);
-      foursquareAPI.getVenueDetails(selectedVenue);
+      nationalWeatherService.getVenueTemperature(selectedVenue); //Outbound
+      foursquare.getVenueDetails(selectedVenue); //Outbound
     })
   },
 
@@ -210,7 +215,7 @@ const ui = {
       this.$button_seeOnFoursquare.hide();
     }
 
-    ui.searchResultsScrollPosition = window.scrollY;
-    ui.moveToDetailsView(venue);
+    ui.searchViewScrollPosition = window.scrollY;
+    ui.moveToDetailsViewFor(venue);
   }
 };
