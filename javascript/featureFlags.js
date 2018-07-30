@@ -1,3 +1,3 @@
-const sessionFlags = {
+const featureFlags = {
   deviceHasNativeGeolocation: ("geolocation" in window.navigator)
 }

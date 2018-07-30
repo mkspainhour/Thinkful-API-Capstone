@@ -47,7 +47,7 @@ const userLocation = {
 
 //Entry Point Function
 $(function entryPoint() {
-  if (sessionFlags.deviceHasNativeGeolocation == false) {
+  if (featureFlags.deviceHasNativeGeolocation == false) {
     console.warn("User can not geolocate natively. Hiding Geolocate User button in the search view.");
     ui.$button_geolocateUser.hide();
   }
