@@ -39,7 +39,6 @@ googleMaps = {
   },
 
   geocode: function (searchTerms) {
-    ui.disableGeolocationButton();
     ui.disableSearchField();
     this.convert(searchTerms)
       .then(this.conversionSucceeded)
