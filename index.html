@@ -42,6 +42,8 @@
 
 		</section>
 
+
+
 		<section id="js-view-search" class="view" role="region" style="display:none">
 
 			<header id="header-search">
@@ -70,12 +72,14 @@
 				</form>
 			</header>
 
-			<p id="js-text-search-message" aria-live="polite">This is a test message to see how this renders, and if it renders properly at all. Okay, thank you for your time.</p>
+			<p id="js-text-search-message" aria-live="assertive">This is a test message to see how this renders, and if it renders properly at all. Okay, thank you for your time.</p>
 
 			<div id="js-wrapper-search-results" aria-live="polite">
 				<!--Results rendered here...-->
 			</div>
 		</section>
+
+
 
 		<section id="js-view-venue-details" class="view card" role="region" style="display:none">
 
@@ -136,11 +140,12 @@
 
 
 
+		
+
 	</main>
 	<!-- #region / Scripts -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvZhOq7cVJIJh9rchv-Owdfkn97f75qGQ&libraries=places"></script>
-	<script src="javascript/featureFlags.js"></script>
 	<script src="javascript/ui.js"></script>
 	<script src="javascript/apis/googleMaps.js"></script>
 	<script src="javascript/apis/foursquare.js"></script>

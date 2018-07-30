@@ -46,8 +46,53 @@ const ui = {
   $button_seeOnFoursquare: $("#js-button-see-on-foursquare"),
 
   //UI Functions
+  configureInitialEventListeners: function() {
+    //Welcome View Button
+    this.$button_letsGetStarted.on("click", function() {
+      ui.moveToSearchView();
+    });
+    //Search View, Geolocate User Button
+    ui.$button_geolocateUser.on("click", function() {
+      userLocation.nativelyGeolocate();
+    });
+    //Search View, Search Form
+    ui.$form_search.on("submit", function(event) {
+      event.preventDefault(); //To prevent the dreaded site refresh issue
+
+      ui.$text_searchMessage.hide();
+      let searchTerms = ui.$input_search.val();
+      //The search terms must not be blank, must include at least a character or digit, and must not be the same as the previous search term submission
+      if (searchTerms.length > 0 && searchTerms.match(/[\w\d]/g) && googleMaps.previousSearchTerms != searchTerms) {
+        googleMaps.geocode(searchTerms);
+      }
+    });
+    //Search View, Search Field
+    ui.$input_search.on("input", function() { //Event fired whenever the search query field is modified
+      //clearSearchTextButton appearance behavior
+      if(ui.$button_clearSearchText.css("display", "none")) {
+        ui.enableClearSearchTextButton();
+      }
+      if(ui.$input_search.val() == "") {
+        ui.disableClearSearchTextButton();
+      }
+    });
+    //Search View, Clear Search Text Button
+    ui.$button_clearSearchText.on("click", function() {
+      ui.$input_search.val("");
+      ui.disableClearSearchTextButton();
+    });
+    //Venue Details View, Back To Results Button
+    ui.$button_backToResults.on("click", function() {
+      ui.moveToSearchView();
+    });
+    //Venue Details View, See On Foursquare Button
+    ui.$button_seeOnFoursquare.on("click", function () {
+      window.open(ui.currentVenueFoursquareLink, "_blank");
+    });
+  },
+
   moveToSearchView: function() {
-    this.$activeView.fadeOut( this.fadeDuration, () => {
+    this.$activeView.fadeOut( this.fadeDuration, ()=> {
       this.$activeView = this.$view_search;
       this.$activeView.fadeIn(this.fadeDuration);
       window.scroll(0, this.searchViewScrollPosition);
@@ -55,7 +100,6 @@ const ui = {
   },
 
   moveToDetailsViewFor: function(venue) {
-
     this.searchViewScrollPosition = window.scrollY;
 
     this.$activeView.fadeOut(this.fadeDuration, () => {
@@ -117,7 +161,7 @@ const ui = {
     this.$input_search.get(0).setSelectionRange(0, 0); //Sets the cursor to the beginning of the input to maximize legibility of new text content
   },
 
-  searchFeedback: function(newMessage) {
+  setSearchFeedback: function(newMessage) {
     ui.$text_searchMessage.show();
     ui.$text_searchMessage.html(newMessage);
     this.scrollToTopOfResults();
@@ -141,23 +185,27 @@ const ui = {
       constructedVenueElements.push(currentVenueElement);
     }
     this.$wrapper_searchResults.html(constructedVenueElements);
+
     this.addSearchResultEventListeners();
+    this.$wrapper_searchResults.fadeIn(this.fadeDuration);
     this.disableGeolocatingButtonAnimation();
     ui.enableSearchField();
     ui.enableClearSearchTextButton();
-    this.$wrapper_searchResults.fadeIn(this.fadeDuration);
   },
 
-  addSearchResultEventListeners: function () {
+  addSearchResultEventListeners: function() {
     $(".search-result").on("click", function (event) {
       selectedVenue = foursquare.fetchedVenues[event.currentTarget.id];
       ui.$text_venueTemperature.html("Fetching...");
+
       nationalWeatherService.getVenueTemperature(selectedVenue); //Outbound
       foursquare.getVenueDetails(selectedVenue); //Outbound
     })
   },
 
-  showVenueDetailsFor: function (venue) { //TODO: 
+  showVenueDetailsFor: function (venue) {
+    ui.searchViewScrollPosition = window.scrollY; //Save the scroll position in the search results so that it can be returned to
+
     this.$text_venueType.html(venue.category);
     this.$text_venueName.html(venue.name);
 
@@ -215,7 +263,6 @@ const ui = {
       this.$button_seeOnFoursquare.hide();
     }
 
-    ui.searchViewScrollPosition = window.scrollY;
     ui.moveToDetailsViewFor(venue);
   }
 };

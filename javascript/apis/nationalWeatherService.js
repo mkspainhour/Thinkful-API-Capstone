@@ -1,5 +1,5 @@
 nationalWeatherService = {
-  getVenueTemperature: function (venue) {
+  getVenueTemperature: function(venue) {
     if (!venue.temperature) {
       $.ajax({
           dataType: "json",
@@ -15,7 +15,7 @@ nationalWeatherService = {
       console.warn("Duplicate nationalWeatherService.getVenueTemperature(venue) call circumvented.");
     }
   },
-  getVenueTemperatureFailed: function (jqXHR) {
+  getVenueTemperatureFailed: function(jqXHR) {
     ui.$text_venueTemperature.html("Temperature data not available.");
     switch (jqXHR.status) {
       case 404:
@@ -24,7 +24,7 @@ nationalWeatherService = {
         break;
     }
   },
-  getVenueTemperatureSucceeded: function (data) {
+  getVenueTemperatureSucceeded: function(data) {
     console.log("nationalWeatherService.getTemperature(latitude, longitude) succeeded!");
     foursquare.fetchedVenues[this.venueTargetIndex].temperature = data.properties.periods[0].temperature;
     ui.$text_venueTemperature.html(data.properties.periods[0].temperature + " ℉");

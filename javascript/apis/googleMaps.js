@@ -1,7 +1,9 @@
-
 googleMaps = {
-  activeMarker: null,
   map: null,
+  activeMarker: null,
+  geocoder: new google.maps.Geocoder(),
+  previousSearchTerms: null,
+
   initializeVenueMap: function () {
     this.map = new google.maps.Map(ui.$map_wrapper[0], {
       center: {
@@ -36,27 +38,24 @@ googleMaps = {
     this.activeMarker.setPosition(this.map.getCenter());
   },
 
-  geocoder: new google.maps.Geocoder(),
-  previousSearchTerms: null,
   geocode: function (searchTerms) {
+    ui.disableGeolocationButton();
+    ui.disableSearchField();
     this.convert(searchTerms)
       .then(this.conversionSucceeded)
       .catch(this.conversionFailed);
   },
   convert: function (searchTerms) {
     return new Promise((resolve, reject) => {
-      this.geocoder.geocode({"address": searchTerms},
-        function (results, status) {
-          status === "OK" ? resolve(results) : reject(status);
-        });
+      this.geocoder.geocode({"address": searchTerms}, function (results, status) {
+        status === "OK" ? resolve(results) : reject(status);
+      });
     });
   },
   conversionFailed: function (status) {
     switch (status) {
       case "ZERO_RESULTS":
-        ui.searchFeedback("Couldn't find any results for that location.");
-        ui.enableGeolocationButton();
-        ui.enableSearchField();
+        ui.setSearchFeedback("Couldn't find any results for that location.");
         break;
 
       case "OVER_QUERY_LIMIT":
@@ -73,9 +72,12 @@ googleMaps = {
         alert(`Network error! google.geocode() failed with status: "${status}".`);
         break;
     }
+    ui.enableGeolocationButton();
+    ui.enableSearchField();
   },
   conversionSucceeded: function (results) {
     console.log(`googleMaps.geocode(searchTerms) succeeded!`);
+
     googleMaps.previousSearchTerms = results[0].formatted_address;
     userLocation.setCoordinates(results[0].geometry.location.lat(), results[0].geometry.location.lng());
     ui.setSearchFieldText( results[0].formatted_address );

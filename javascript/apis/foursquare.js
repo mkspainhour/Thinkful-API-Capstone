@@ -24,7 +24,8 @@ const foursquare = {
     longitude: null
   },
   fetchedVenues: [],
-  fetchRecommendationsAround: function (latitude, longitude) {
+
+  fetchRecommendationsAround: function(latitude, longitude) {
     if (this.previousFetchCoordinates.latitude != latitude && this.previousFetchCoordinates.longitude != longitude) {
       this.previousFetchCoordinates.latitude = latitude;
       this.previousFetchCoordinates.longitude = longitude;
@@ -51,7 +52,7 @@ const foursquare = {
       ui.enableSearchField();
     }
   },
-  recommendationFetchFailed: function (jqXHR) {
+  recommendationFetchFailed: function(jqXHR) {
     let errorCode = jqXHR.responseJSON.meta.code;
     switch (errorCode) {
       case 400:
@@ -67,9 +68,10 @@ const foursquare = {
     console.log(`foursquare.fetchRecommendationsAround(latitude, longitude) succeeded!`);
     if ("warning" in data.response) {
       console.warn(`However, there was a warning included: "${data.response.warning.text}"`);
-      ui.searchFeedback("Couldn't find anything with that. I work best if you give me the name of a city.");
+      ui.setSearchFeedback("Couldn't find anything with that. I work best if you give me the name of a city.");
     }
 
+    //Handle and parse recieved data
     foursquare.fetchedVenues = data.response.groups[0].items.map(function (item) {
       let newVenue = new Venue();
       newVenue.id = item.venue.id;
@@ -81,13 +83,14 @@ const foursquare = {
       newVenue.address[1] = item.venue.location.formattedAddress[1];
       return newVenue;
     });
+
     ui.enableGeolocationButton();
     ui.enableSearchField();
     ui.renderVenues(foursquare.fetchedVenues);
   },
 
   alreadyDetailedVenueIDs: [],
-  getVenueDetails: function (venue) {
+  getVenueDetails: function(venue) {
     if(this.alreadyDetailedVenueIDs.includes(venue.id) == false) {
       this.alreadyDetailedVenueIDs.push(venue.id);
       $.ajax({
@@ -110,7 +113,7 @@ const foursquare = {
       ui.showVenueDetailsFor(venue);
     }
   },
-  venueDetailsFetchFailed: function (jqXHR) {
+  venueDetailsFetchFailed: function(jqXHR) {
     let errorCode = jqXHR.responseJSON.meta.code;
     switch (errorCode) {
       case 400:
@@ -124,7 +127,7 @@ const foursquare = {
         break;
     };
   },
-  venueDetailsFetchSucceeded: function (data) {
+  venueDetailsFetchSucceeded: function(data) {
     console.log("foursquare.getVenueDetails(venue) succeeded!");
     let fetchedVenueDetails = data.response.venue;
 

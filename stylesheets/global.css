@@ -219,8 +219,9 @@ button:hover {
   background-color: white;
   box-shadow: var(--shadow-dark);
   border-radius: 3px;
-  -webkit-appearance: none;
+  /* The following properties are meant to prevent bizzare styling defaults noticed on iOS during testing */
   appearance: none;
+  -webkit-appearance: none;
   -moz-appearance: none;
 }
 #js-input-search:disabled {
