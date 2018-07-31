@@ -16,9 +16,11 @@ WHERE achieves this by using the Foursquare API for venue recommendations, Googl
 
 # Screenshots
 <p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/WHERE/master/GitHub%20Media/WHERE%2C%20Welcome%20View.png"></p>
-<br>
+
+***
 
 <p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/WHERE/master/GitHub%20Media/WHERE%2C%20Search%20Results%20View.png"></p>
-<br>
+
+***
 
 <p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/WHERE/master/GitHub%20Media/WHERE%2C%20Venue%20Details%20View.png"></p>
