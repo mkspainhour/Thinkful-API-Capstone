@@ -1,5 +1,5 @@
 <br><br>
-<p align="center"><img width="40%" src="https://raw.githubusercontent.com/mkspainhour/Thinkful-API-Capstone-WHERE/master/GitHub%20Media/Logo.png"></p>
+<p align="center"><img width="40%" src="https://raw.githubusercontent.com/mkspainhour/WHERE/master/GitHub%20Media/Logo.png"></p>
 <br><br>
 
 # At-a-glance Venue Recommendations
@@ -13,3 +13,12 @@ WHERE achieves this by using the Foursquare API for venue recommendations, Googl
 - UI components that clearly communicate their state and behavior.
 - Iconography that requires minmal processing to interpret.
 - Typography whose visual character aligns itself along the design tone and goals of the application.
+
+<p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/Thinkful-API-Capstone-WHERE/master/GitHub%20Media/Logo.png"></p>
+<br>
+
+<p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/Thinkful-API-Capstone-WHERE/master/GitHub%20Media/Logo.png"></p>
+<br>
+
+<p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/Thinkful-API-Capstone-WHERE/master/GitHub%20Media/Logo.png"></p>
+<br>
