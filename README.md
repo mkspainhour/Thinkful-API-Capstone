@@ -1,5 +1,5 @@
 <br><br>
-<p align="center"><img width="40%" src="https://raw.githubusercontent.com/mkspainhour/WHERE/master/GitHub%20Media/Logo.png"></p>
+<p align="center"><img width="30%" src="https://raw.githubusercontent.com/mkspainhour/WHERE/master/GitHub%20Media/Logo.png"></p>
 <br><br>
 
 # At-a-glance Venue Recommendations
