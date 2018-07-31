@@ -81,7 +81,7 @@ main {
   letter-spacing: 0.09375rem;
   line-height: 1rem;
   text-transform: uppercase;
-  opacity: 0.6;
+  opacity: 0.7;
 
   margin-bottom: 0.25rem;
 }
@@ -99,8 +99,8 @@ main {
   font-size: 0.75rem;
   letter-spacing: 0.015625rem;
   line-height: 1rem;
-  color: var(--color-dark);
-  opacity: 0.5;
+  color: hsla(235,75%,17%,0.71); /* WCAG 2.0 AAA Compliant */
+  opacity: 0.75;
 }
 
 .colored {
@@ -222,7 +222,8 @@ button:hover {
   -moz-appearance: none;
 }
 #js-input-search:disabled {
-  /* color: var(--color-dark); */
+  color: hsla(235, 75%, 17%, 0.6);
+  -webkit-text-fill-color: hsla(235, 75%, 17%, 0.6);
   pointer-events: none;
 }
 
