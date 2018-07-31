@@ -14,11 +14,11 @@ WHERE achieves this by using the Foursquare API for venue recommendations, Googl
 - Iconography that requires minmal processing to interpret.
 - Typography whose visual character aligns itself along the design tone and goals of the application.
 
+# Screenshots
 <p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/WHERE/master/GitHub%20Media/WHERE%2C%20Welcome%20View.png"></p>
 <br>
 
-<p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/Thinkful-API-Capstone-WHERE/master/GitHub%20Media/Logo.png"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/WHERE/master/GitHub%20Media/WHERE%2C%20Search%20Results%20View.png"></p>
 <br>
 
-<p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/Thinkful-API-Capstone-WHERE/master/GitHub%20Media/Logo.png"></p>
-<br>
+<p align="center"><img src="https://raw.githubusercontent.com/mkspainhour/WHERE/master/GitHub%20Media/WHERE%2C%20Venue%20Details%20View.png"></p>
