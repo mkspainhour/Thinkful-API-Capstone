@@ -33,3 +33,8 @@ WHERE uses the Foursquare API for venue recommendations, Google's Geocoding Serv
 - SVG
 - JavaScript
 - The data graciously provided by <a href="https://developer.foursquare.com/docs">Foursquare</a>, <a href="https://developers.google.com/maps/documentation/javascript/tutorial">Google</a>, and the <a href="https://www.weather.gov/documentation/services-web-api">National Weather Service</a> through their publicly available API's.
+
+<br><br>
+
+#### Credit
+Designed & Developed by Marshall Spainhour
