@@ -3,7 +3,7 @@
 <br><br>
 
 # At-a-glance Venue Recommendations
-WHERE quickly suggests activities most likely to be worth someone's time using either their current location or a provided city.
+WHERE quickly suggests the activities most likely to be worth someone's time using either their current location or a provided city.
 
 ## Goals
 - Minimal, spacious design that draws the users eye immediately to significant details and does not needlessly distract.
