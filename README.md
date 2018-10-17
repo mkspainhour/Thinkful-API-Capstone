@@ -9,7 +9,7 @@
 - Minimal, spacious design that draws the users eye immediately to significant details and does not needlessly distract.
 - UI components that clearly communicate their state and behavior.
 - Iconography that requires minimal processing to interpret.
-- Typography whose visual character aligns itself along the design tone and goals of the application.
+- Typography whose visual character is aligned with the design tone and goals of the application.
 
 ## API's Utilized
 WHERE uses the Foursquare API for venue recommendations, Google's Geocoding Service for search query interpretation and coordinate fetching, the Google Maps API to aid the user in navigating to a given venue, and the National Weather Service API to help inform the users choice when applicable.
