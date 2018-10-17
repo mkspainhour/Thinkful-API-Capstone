@@ -14,10 +14,10 @@ html {
   --color-light-active: hsl(235, 100%, 91%);
 
   --color-site-background: white;
-  
+
   --shadow-main: 0 1px 2px hsla(235, 80%, 52%, 0.30), 0 1px 3px hsla(235, 80%, 52%, 0.15);
   --shadow-dark: 0 1px 2px hsla(235, 75%, 17%, 0.20), 0 1px 3px hsla(235, 75%, 17%, 0.10);
-  
+
   --spacing-unit: calc(0.25rem + 4vmin);
 
   font-family: var(--fonts);
@@ -56,7 +56,7 @@ main {
   align-content: center;
 }
 
-.card {  
+.card {
   border-radius: 3px;
   box-shadow: var(--shadow-dark);
   padding: var(--spacing-unit);
@@ -170,6 +170,7 @@ button:hover {
 #js-view-search {
   position: relative;
   top: calc( var(--spacing-unit)*2 + 5.25rem);
+  padding-bottom: var(--spacing-unit);
 }
 #header-search {
   background-color: hsla(235, 40%, 99%, 99);
@@ -293,6 +294,7 @@ button:hover {
   margin-top: var(--spacing-unit);
   width: 100%;
   max-width: 25rem;
+  overflow: auto;
 }
 
 #search-app-title {
