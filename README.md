@@ -8,7 +8,7 @@
 ## Goals
 - Minimal, spacious design that draws the users eye immediately to significant details and does not needlessly distract.
 - UI components that clearly communicate their state and behavior.
-- Iconography that requires minmal processing to interpret.
+- Iconography that requires minimal processing to interpret.
 - Typography whose visual character aligns itself along the design tone and goals of the application.
 
 ## API's Utilized
