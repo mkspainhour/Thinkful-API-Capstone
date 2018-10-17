@@ -12,7 +12,7 @@ nationalWeatherService = {
         .catch(this.getVenueTemperatureFailed);
     }
     else {
-      console.warn("Duplicate nationalWeatherService.getVenueTemperature(venue) call circumvented.");
+      console.log("Duplicate nationalWeatherService.getVenueTemperature(venue) call circumvented.");
     }
   },
   getVenueTemperatureFailed: function(jqXHR) {
